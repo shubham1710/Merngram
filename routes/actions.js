@@ -5,6 +5,6 @@ const auth = require('../middleware/auth');
 
 router.post('like/:postId/:userId', actionController.like);
 router.post('comment/:postId/:userId', actionController.comment);
-router.post('follow/:followerId:/followingId', actionController.follow);
+router.post('follow/:followerId/:followingId', actionController.follow);
 
 module.exports = router;
