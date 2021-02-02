@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const dotenv = require('dotenv');
+dotenv.config();
 
 const ProfileSchema = ({
     userId: {
@@ -10,11 +12,12 @@ const ProfileSchema = ({
         type: String
     },
     bio: {
-        type: String
+        type: String,
+        default: ''
     },
     pic: {
-        type: String
-        // default profile pic url to be added here
+        type: String,
+        default: process.env.DEFAULT_IMAGE
     },
     followers: [{
         followerId: {

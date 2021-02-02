@@ -1,10 +1,11 @@
 const User = require('../models/User');
+const Profile = require('../models/Profile');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const dotenv = require('dotenv');
 dotenv.config();
 
-module.exports.signup = (req,res) => {
+module.exports.signup = async (req,res) => {
     const { username, email, password } = req.body;
 
     if(!username || !email || !password){
@@ -30,6 +31,8 @@ module.exports.signup = (req,res) => {
                                 { expiresIn: 3600 },
                                 (err, token) => {
                                     if(err) throw err;
+                                    const profile = new Profile({userId: user._id, name: user.username});
+                                    await profile.save();
                                     res.json({
                                         token,
                                         user: {
