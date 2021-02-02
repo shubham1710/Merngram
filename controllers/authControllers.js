@@ -26,7 +26,7 @@ module.export.signup = (req,res) => {
                         .then(user => {
                             jwt.sign(
                                 { id: user._id },
-                                config.get('jwtsecret'),
+                                process.env.JWTSECRET,
                                 { expiresIn: 3600 },
                                 (err, token) => {
                                     if(err) throw err;
@@ -62,7 +62,7 @@ module.exports.login = async (req,res) => {
 
                     jwt.sign(
                         { id: user._id },
-                        config.get('jwtsecret'),
+                        process.env.JWTSECRET,
                         { expiresIn: 3600 },
                         (err, token) => {
                             if(err) throw err;
