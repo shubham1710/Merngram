@@ -8,6 +8,16 @@ app.use(express.json());
 
 dotenv.config();
 
+const authRoutes = require('./routes/auth');
+const postRoutes = require('./routes/post');
+const profileRoutes = require('./routes/profile');
+const actionRoutes = require('./routes/actions');
+
+app.use('/api',authRoutes);
+app.use('/api',postRoutes);
+app.use('/api',profileRoutes);
+app.use('/api',actionRoutes);
+
 if(process.env.NODE_ENV === 'production') {
     app.use(express.static('client/build'));
     app.get('*', (req, res) => {
