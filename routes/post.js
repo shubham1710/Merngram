@@ -2,7 +2,10 @@ const { Router } = require('express');
 const router = Router();
 const postController = require('../controllers/postControllers');
 
-router.get('/posts', postController.get_posts);
+router.get('/posts', postController.get_all_posts);
+router.get('/post/:id',postController.get_single_post);
+router.get('/posts/:userId',postController.get_user_posts);
+router.get('/posts/following', postController.get_following_posts);
 router.post('/post', postController.add_post);
 router.put('/post/:id', postController.update_post);
 router.delete('/post/:id', postController.delete_post);
