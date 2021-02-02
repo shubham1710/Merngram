@@ -12,6 +12,10 @@ const PostSchema = new Schema({
     },
     desc: {
         type: String,
+    },
+    date: {
+        type: Date,
+        default: Date.now
     }
 })
 
