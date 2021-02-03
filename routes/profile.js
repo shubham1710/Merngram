@@ -3,6 +3,6 @@ const router = Router();
 const profileController = require('../controllers/profileControllers');
 
 router.get('/profile/:id', profileController.get_profile);
-router.get('/followers/:id', profileController.get_followers);
+router.put('/profile/:id', profileController.update_profile);
 
 module.exports = router;

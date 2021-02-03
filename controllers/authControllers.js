@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 const dotenv = require('dotenv');
 dotenv.config();
 
-module.exports.signup = async (req,res) => {
+module.exports.signup = (req,res) => {
     const { username, email, password } = req.body;
 
     if(!username || !email || !password){
@@ -31,15 +31,19 @@ module.exports.signup = async (req,res) => {
                                 { expiresIn: 3600 },
                                 (err, token) => {
                                     if(err) throw err;
-                                    const profile = new Profile({userId: user._id, name: user.username});
-                                    await profile.save();
-                                    res.json({
-                                        token,
-                                        user: {
-                                            id: user._id,
-                                            username: user.username,
-                                            email: user.email
-                                        }
+                                    Profile.create({userId: user._id, name: user.username}).then(profile=>{
+                                        res.json({
+                                            token,
+                                            user: {
+                                                id: user._id,
+                                                username: user.username,
+                                                email: user.email
+                                            },
+                                            profile: {
+                                                id: profile._id,
+                                                name: profile.name,
+                                            }
+                                        });
                                     });
                                 }
                             )
