@@ -3,7 +3,7 @@ const Post = require('../models/Post');
 
 module.exports.like = async (req,res) => {
     const userId = req.params.userId;
-    const postId = req.params.postId;
+    const {postId} = req.body;
     try{
         const post = await Post.findOne({_id: postId});
         let likeIndex = post.likes.findIndex(p => p.likeUser == userId);
@@ -27,8 +27,7 @@ module.exports.like = async (req,res) => {
 
 module.exports.comment = async (req,res) => {
     const userId = req.params.userId;
-    const postId = req.params.postId;
-    const {cmnt} = req.body;
+    const {postId, cmnt} = req.body;
     const post = await Post.findOne({_id: postId});
     post.comments.push({cmntUser: userId, cmnt: cmnt});
     post = await post.save();
@@ -37,7 +36,7 @@ module.exports.comment = async (req,res) => {
 
 module.exports.follow = async (req,res) => {
     const follower = req.params.followerId;
-    const following = req.params.followingId;
+    const {following} = req.body;
     try{
         const profile = await Profile.findOne({_id: follower});
         let follwingIndex = profile.following.findIndex(p => p.followingId == following);
