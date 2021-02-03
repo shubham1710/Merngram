@@ -5,7 +5,7 @@ module.exports.get_profile = (req,res) => {
 }
 
 module.exports.update_profile = (req,res) => {
-    Profile.findByIdAndUpdate({userId: req.params.id},req.body).then(function(profile){
+    Profile.findOneAndUpdate({userId: req.params.id},req.body).then(function(profile){
         Profile.findOne({userId: req.params.id}).then(function(profile){
             res.json(profile);
         });
