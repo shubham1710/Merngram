@@ -3,18 +3,23 @@ const Post = require('../models/Post');
 
 module.exports.like = async (req,res) => {
     const userId = req.params.userId;
-    const {postId} = req.body;
+    const postId = req.params.postId;
     try{
-        const post = await Post.findOne({_id: postId});
-        let likeIndex = post.likes.findIndex(p => p.likeUser == userId);
-        
-        // if post is already liked
-        if(likeIndex){
-            post.likes.splice(likeIndex,1);
+        var post = await Post.findOne({_id: postId});
+        if(post.likes){
+            let likeIndex = post.likes.findIndex(p => p.likeUser == userId);
+            
+            // if post is already liked
+            if(likeIndex){
+                post.likes.splice(likeIndex,1);
+            }
+            // create a new like
+            else{
+                post.likes.push({likeUser: userId});
+            }
         }
-        // create a new like
         else{
-            post.likes.push({likeUser: userId});
+            post.likes = [{likeUser: userId}];
         }
         post = await post.save();
         return res.json({success: true});
@@ -27,29 +32,62 @@ module.exports.like = async (req,res) => {
 
 module.exports.comment = async (req,res) => {
     const userId = req.params.userId;
-    const {postId, cmnt} = req.body;
-    const post = await Post.findOne({_id: postId});
-    post.comments.push({cmntUser: userId, cmnt: cmnt});
+    const postId = req.params.postId;
+    const {cmnt} = req.body;
+    var post = await Post.findOne({_id: postId});
+    if(post.comments){
+        post.comments.push({cmntUser: userId, cmnt: cmnt});
+    }
+    else{
+        post.comments = [{cmntUser: userId, cmnt: cmnt}];
+    }
     post = await post.save();
     return res.json({success: true});
 }
 
 module.exports.follow = async (req,res) => {
     const follower = req.params.followerId;
-    const {following} = req.body;
+    const following = req.params.followingId;
     try{
-        const profile = await Profile.findOne({_id: follower});
-        let follwingIndex = profile.following.findIndex(p => p.followingId == following);
+        var follower_profile = await Profile.findOne({_id: follower});
+        var following_profile = await Profile.findOne({_id: following});
 
-        // if user is already followed
-        if(follwingIndex > -1){
-            profile.following.splice(follwingIndex,1);
+        // add the person to following list of the follower
+        if(follower_profile.following){
+            let followingIndex = follower_profile.following.findIndex(p => p.followingId == following);
+
+            // if user is already followed
+            if(followingIndex > -1){
+                follower_profile.following.splice(follwingIndex,1);
+            }
+            // user is not followed
+            else{
+                follower_profile.following.push({followingId: following});
+            }
         }
-        // user is not followed
         else{
-            profile.following.push({followingId: following});
+            follower_profile.following = [{followingId: following}];
         }
-        profile = await profile.save();
+
+        // add the following person to follower list
+        if(following_profile.followers){
+            let followerIndex = following_profile.followers.findIndex(p => p.followerId == follower);
+
+            // if user is already followed
+            if(followerIndex > -1){
+                following_profile.followers.splice(follwerIndex,1);
+            }
+            // user is not followed
+            else{
+                following_profile.followers.push({followerId: follower});
+            }
+        }
+        else{
+            following_profile.followers = [{followerId: follower}];
+        }
+
+        follower_profile = await follower_profile.save();
+        following_profile = await following_profile.save();
         return res.json({success: true});
     }
     catch (err) {
