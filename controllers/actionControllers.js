@@ -10,7 +10,7 @@ module.exports.like = async (req,res) => {
             let likeIndex = post.likes.findIndex(p => p.likeUser == userId);
             
             // if post is already liked
-            if(likeIndex){
+            if(likeIndex > -1){
                 post.likes.splice(likeIndex,1);
             }
             // create a new like
@@ -49,8 +49,8 @@ module.exports.follow = async (req,res) => {
     const follower = req.params.followerId;
     const following = req.params.followingId;
     try{
-        var follower_profile = await Profile.findOne({_id: follower});
-        var following_profile = await Profile.findOne({_id: following});
+        var follower_profile = await Profile.findOne({userId: follower});
+        var following_profile = await Profile.findOne({userId: following});
 
         // add the person to following list of the follower
         if(follower_profile.following){
@@ -58,7 +58,7 @@ module.exports.follow = async (req,res) => {
 
             // if user is already followed
             if(followingIndex > -1){
-                follower_profile.following.splice(follwingIndex,1);
+                follower_profile.following.splice(followingIndex,1);
             }
             // user is not followed
             else{

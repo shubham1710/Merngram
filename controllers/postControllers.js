@@ -25,7 +25,8 @@ module.exports.get_following_posts = async (req,res) => {
 }
 
 module.exports.add_post = (req,res) => {
-    const newPost = new Post(req.body);
+    const {userId, image, desc} = req.body;
+    const newPost = new Post({userId, image, desc, likes: [], comments: []});
     newPost.save().then(post => res.json(post));
 }
 

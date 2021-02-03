@@ -31,7 +31,8 @@ module.exports.signup = (req,res) => {
                                 { expiresIn: 3600 },
                                 (err, token) => {
                                     if(err) throw err;
-                                    Profile.create({userId: user._id, name: user.username}).then(profile=>{
+                                    Profile.create({userId: user._id, name: user.username, followers: [], following: []})
+                                    .then(profile=>{
                                         res.json({
                                             token,
                                             user: {
