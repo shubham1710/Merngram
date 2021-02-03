@@ -1,23 +1,23 @@
 const Profile = require('../models/Profile');
-const Like = require('../models/Like');
-const Comment = require('../models/Comment');
+const Post = require('../models/Post');
 
 module.exports.like = async (req,res) => {
     const userId = req.params.userId;
     const postId = req.params.postId;
     try{
-        const like = await Like.findOne({userId, postId});
+        const post = await Post.findOne({_id: postId});
+        let likeIndex = post.likes.findIndex(p => p.likeUser == userId);
         
         // if post is already liked
-        if(like){
-            const unlike = await Like.findByIdAndDelete({_id: like._id});
-            return res.json({status: 'unlike'});
+        if(likeIndex){
+            post.likes.splice(likeIndex,1);
         }
         // create a new like
         else{
-            const newLike = await Like.create({userId, postId});
-            return res.json({status: 'like'});
+            post.likes.push({likeUser: userId});
         }
+        post = await post.save();
+        return res.json({success: true});
     }
     catch (err) {
         console.log(err);
@@ -29,8 +29,10 @@ module.exports.comment = async (req,res) => {
     const userId = req.params.userId;
     const postId = req.params.postId;
     const {cmnt} = req.body;
-    const comment = await Comment.create({userId, postId, cmnt});
-    return res.json(comment);
+    const post = await Post.findOne({_id: postId});
+    post.comments.push({cmntUser: userId, cmnt: cmnt});
+    post = await post.save();
+    return res.json({success: true});
 }
 
 module.exports.follow = async (req,res) => {

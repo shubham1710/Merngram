@@ -1,6 +1,5 @@
 const Post = require('../models/Post');
 const Profile = require('../models/Profile');
-const User = require('../models/User');
 
 module.exports.get_all_posts = (req,res) => {
     Post.find().sort({date:-1}).then(posts => res.json(posts));

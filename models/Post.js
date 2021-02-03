@@ -13,6 +13,22 @@ const PostSchema = new Schema({
     desc: {
         type: String,
     },
+    likes: [{
+        likeUser: {
+            type: String,
+            required: true
+        }
+    }],
+    comments: [{
+        cmntUser: {
+            type: String,
+            required: true
+        },
+        cmnt: {
+            type: String,
+            required: true
+        }
+    }],
     date: {
         type: Date,
         default: Date.now
