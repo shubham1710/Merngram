@@ -45,6 +45,19 @@ module.exports.comment = async (req,res) => {
     return res.json({success: true});
 }
 
+module.exports.delete_comment = async (req,res) => {
+    const postId = req.params.postId;
+    const commentId = req.params.commentId;
+    var post = await Post.findOne({_id: postId});
+    let cmntIndex = post.comments.findIndex(p => p._id == commentId);
+    if(cmntIndex > -1)
+    {
+        post.comments.splice(cmntIndex,1);
+    }
+    post = await post.save();
+    return res.json({success: true});
+}
+
 module.exports.follow = async (req,res) => {
     const follower = req.params.followerId;
     const following = req.params.followingId;
@@ -73,11 +86,11 @@ module.exports.follow = async (req,res) => {
         if(following_profile.followers){
             let followerIndex = following_profile.followers.findIndex(p => p.followerId == follower);
 
-            // if user is already followed
+            // if user is already a follwer
             if(followerIndex > -1){
                 following_profile.followers.splice(follwerIndex,1);
             }
-            // user is not followed
+            // user is not a follower
             else{
                 following_profile.followers.push({followerId: follower});
             }
