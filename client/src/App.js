@@ -3,11 +3,13 @@ import { Provider } from 'react-redux';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter } from 'react-router-dom';
+import AppNavbar from './components/AppNavbar.js';
 
 class App extends Component {
   render(){
     return (
       <div className="App">
+        <AppNavbar/>
         <h1>Merngram</h1>
       </div>
     );
