@@ -21,6 +21,9 @@ class AppNavbar extends Component {
                     <NavLink href="/feed">Feed</NavLink>
                 </NavItem>
                 <NavItem>
+                    <NavLink href="/new">New Post</NavLink>
+                </NavItem>
+                <NavItem>
                     <NavLink href="/profile">Profile</NavLink>
                 </NavItem>
                 <NavItem>
