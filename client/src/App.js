@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter } from 'react-router-dom';
-import AppNavbar from './components/AppNavbar.js';
+import AppNavbar from './components/comps/AppNavbar.js';
 import Main from './components/Main';
 
 class App extends Component {

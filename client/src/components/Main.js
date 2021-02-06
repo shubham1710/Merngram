@@ -3,15 +3,16 @@ import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Login from './auth/Login';
 import Register from './auth/Register';
-import Home from './Home';
-import Profile from './Profile';
-import FollowList from './FollowList';
-import Photos from './Photos';
-import EditProfile from './EditProfile';
-import Feed from './Feed';
-import PostDetail from './PostDetail';
-import NewPost from './NewPost';
-import NotFound from './NotFound';
+import Home from './post/Home';
+import Profile from './profile/Profile';
+import Followers from './profile/Followers';
+import Following from './profile/Following';
+import Photos from './profile/Photos';
+import EditProfile from './profile/EditProfile';
+import Feed from './post/Feed';
+import PostDetail from './post/PostDetail';
+import NewPost from './post/NewPost';
+import NotFound from './comps/NotFound';
 
 class Main extends Component {
     render(){
@@ -34,10 +35,10 @@ class Main extends Component {
                         <Profile/>
                     </Route>
                     <Route path='/followers/:id'>
-                        <FollowList/>
+                        <Followers/>
                     </Route>
                     <Route path='/following/:id'>
-                        <FollowList/>
+                        <Following/>
                     </Route>
                     <Route path='/photos/:id'>
                         <Photos/>
