@@ -1,5 +1,5 @@
 import { Component, Fragment } from 'react';
-import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, Container, NavLink } from 'reactstrap';
+import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, Container, NavLink, Button} from 'reactstrap';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -18,12 +18,10 @@ class AppNavbar extends Component {
         const authLinks = (
             <Fragment>
                 <NavItem>
-                    <span className="navbar-text mr-3">
-                        <strong>Hi Shubham</strong>
-                    </span>
+                    <NavLink href="/feed">Feed</NavLink>
                 </NavItem>
                 <NavItem>
-                    <NavLink href="/">Home</NavLink>
+                    <NavLink href="/profile">Profile</NavLink>
                 </NavItem>
                 <NavItem>
                     <NavLink href="/logout">Logout</NavLink>
@@ -44,7 +42,7 @@ class AppNavbar extends Component {
 
         return(
             <div>
-                <Navbar color="dark" dark expand="sm" className="mb-5">
+                <Navbar color="light" light expand="sm" className="mb-5">
                     <Container>
                         <NavbarBrand href="/">Merngram</NavbarBrand>
                         <NavbarToggler onClick={this.toggle}/>
