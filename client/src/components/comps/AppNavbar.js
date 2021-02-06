@@ -25,7 +25,7 @@ class AppNavbar extends Component {
                     <Link to="/new"><NavLink>New Post</NavLink></Link>
                 </NavItem>
                 <NavItem>
-                    <Link to="/profile/1"><NavLink>Profile</NavLink></Link>
+                    <Link to={`/profile/id`}><NavLink>Profile</NavLink></Link>
                 </NavItem>
                 <NavItem>
                     <NavLink href="/logout">Logout</NavLink>
