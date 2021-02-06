@@ -2,6 +2,7 @@ import { Component, Fragment } from 'react';
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, Container, NavLink, Button} from 'reactstrap';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 class AppNavbar extends Component {
     state = {
@@ -18,13 +19,13 @@ class AppNavbar extends Component {
         const authLinks = (
             <Fragment>
                 <NavItem>
-                    <NavLink href="/feed">Feed</NavLink>
+                    <Link to="/feed"><NavLink>Feed</NavLink></Link>
                 </NavItem>
                 <NavItem>
-                    <NavLink href="/new">New Post</NavLink>
+                    <Link to="/new"><NavLink>New Post</NavLink></Link>
                 </NavItem>
                 <NavItem>
-                    <NavLink href="/profile">Profile</NavLink>
+                    <Link to="/profile/1"><NavLink>Profile</NavLink></Link>
                 </NavItem>
                 <NavItem>
                     <NavLink href="/logout">Logout</NavLink>
@@ -35,10 +36,10 @@ class AppNavbar extends Component {
         const guestLinks = (
             <Fragment>
                 <NavItem>
-                    <NavLink href="/register">Register</NavLink>
+                    <Link to="/register"><NavLink>Register</NavLink></Link>
                 </NavItem>
                 <NavItem>
-                    <NavLink href="/login">Login</NavLink>
+                    <Link to="/login"><NavLink>Login</NavLink></Link> 
                 </NavItem>
             </Fragment>
         );
