@@ -16,6 +16,16 @@ body {
   background: linear-gradient(to right, #fffafa, #f5fffa);
 }
 
+.profile-head {
+  transform: translateY(5rem);
+}
+
+.cover {
+  background-color: blanchedalmond;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
 .card-signin {
   border: 0;
   border-radius: 1rem;

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Login from './auth/Login';
 import Register from './auth/Register';
 import Home from './Home';
+import Profile from './Profile';
 
 class Main extends Component {
     render(){
@@ -18,6 +19,9 @@ class Main extends Component {
                     </Route>
                     <Route path='/register'>
                         <Register/>
+                    </Route>
+                    <Route path='/profile'>
+                        <Profile/>
                     </Route>
                     <Redirect to='/home'/>
                 </Switch>
