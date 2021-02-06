@@ -11,6 +11,11 @@
   --input-padding-y: 0.75rem;
 }
 
+body {
+  background: white;
+  background: linear-gradient(to right, #fffafa, #f5fffa);
+}
+
 .card-signin {
   border: 0;
   border-radius: 1rem;
