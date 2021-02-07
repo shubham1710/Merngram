@@ -40,7 +40,7 @@ class Login extends Component {
                     <div className="col-md-7 mx-auto">
                         <Card className="card card-signin my-5">
                             <CardBody className="card-body">
-                                <h5 className="card-title text-center">Sign In</h5>
+                                <h5 className="card-title text-center"><b>Sign In</b></h5>
                                 {this.state.msg ? (<Alert color="danger">{this.state.msg}</Alert>):null}
                                 <Form className="form-signin" onSubmit={this.onSubmit}>
                                     <FormGroup className="form-label-group">

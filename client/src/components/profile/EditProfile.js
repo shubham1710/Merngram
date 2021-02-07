@@ -44,7 +44,7 @@ const EditProfile = () => {
                 <div className="col-md-7 mx-auto">
                     <Card className="card card-signin my-5">
                         <CardBody className="card-body">
-                            <h5 className="card-title text-center">Update Your Profile</h5>
+                            <h5 className="card-title text-center"><b>Update Your Profile</b></h5>
                             {msg ? (<Alert color="danger">{msg}</Alert>):null}
                             <img src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80" alt="Profile image" style={{height:'150px', width: '150px'}} className="d-block mx-auto img-fluid img-thumbnail mb-4"></img>
                             <Form className="form-signin" onSubmit={onSubmit}>
@@ -53,6 +53,7 @@ const EditProfile = () => {
                                     <span>+</span>
                                 </Label>
                                 <div className="output mb-2">
+                                    {file && <div >{file.name}</div>}
                                     {file && <ProgressBar file={file} setFile={setFile} setPic={setPic}/>}
                                 </div>
                                 <FormGroup className="form-label-group">
