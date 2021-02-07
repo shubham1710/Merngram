@@ -15,7 +15,7 @@ class Home extends Component {
                                 </Link> 
                                 <CardText tag="h5" className="mt-2">Beautiful picture</CardText>
                                 <Button color="success" className="mr-2">Like</Button>
-                                <Button color="danger" className="mr-2">Unike</Button>
+                                <Button color="danger" className="mr-2">Unlike</Button>
                                 <Link to={`/post/id`}><Button color="info">Comment</Button></Link>
                             </CardBody>
                         </Card>
@@ -28,7 +28,7 @@ class Home extends Component {
                                 </Link>
                                 <CardText tag="h5" className="mt-2">Beautiful picture</CardText>
                                 <Button color="success" className="mr-2">Like</Button>
-                                <Button color="danger" className="mr-2">Unike</Button>
+                                <Button color="danger" className="mr-2">Unlike</Button>
                                 <Link to={`/post/id`}><Button color="info">Comment</Button></Link>
                             </CardBody>
                         </Card>

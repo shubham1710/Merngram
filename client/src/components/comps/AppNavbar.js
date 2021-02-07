@@ -45,19 +45,17 @@ class AppNavbar extends Component {
         );
 
         return(
-            <div>
-                <Navbar color="light" light expand="sm" className="mb-5">
-                    <Container>
-                        <Link to='/'><NavbarBrand>Merngram</NavbarBrand></Link>
-                        <NavbarToggler onClick={this.toggle}/>
-                        <Collapse isOpen={this.state.isOpen} navbar>
-                            <Nav className="ml-auto" navbar> 
-                                {authLinks}{guestLinks}                               
-                            </Nav>
-                        </Collapse>
-                    </Container>
-                </Navbar>
-            </div>
+            <Navbar color="light" light expand="sm" className="mb-5" sticky="top">
+                <Container>
+                    <Link to='/'><NavbarBrand><b>Merngram</b></NavbarBrand></Link>
+                    <NavbarToggler onClick={this.toggle}/>
+                    <Collapse isOpen={this.state.isOpen} navbar>
+                        <Nav className="ml-auto" navbar> 
+                            {authLinks}{guestLinks}                               
+                        </Nav>
+                    </Collapse>
+                </Container>
+            </Navbar>
         );
     }
 }
