@@ -12,7 +12,7 @@ class Home extends Component {
                             <CardBody>
                                 <Link to={`/post/id`}>
                                     <CardImg src="https://images.unsplash.com/photo-1469594292607-7bd90f8d3ba4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80" alt="" className="img-fluid rounded shadow-sm"></CardImg>
-                                </Link> 
+                                </Link>
                                 <CardText tag="h5" className="mt-2">Beautiful picture</CardText>
                                 <Button color="success" className="mr-2">Like</Button>
                                 <Button color="danger" className="mr-2">Unlike</Button>

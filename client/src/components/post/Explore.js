@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 
-const Feed = () => {
+const Explore = () => {
     return ( 
         <div className="container">
             <div className="row">
@@ -37,4 +37,4 @@ const Feed = () => {
     );
 }
  
-export default Feed;
+export default Explore;

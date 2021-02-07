@@ -9,7 +9,7 @@ import Followers from './profile/Followers';
 import Following from './profile/Following';
 import Photos from './profile/Photos';
 import EditProfile from './profile/EditProfile';
-import Feed from './post/Feed';
+import Explore from './post/Explore';
 import PostDetail from './post/PostDetail';
 import NewPost from './post/NewPost';
 import NotFound from './comps/NotFound';
@@ -22,8 +22,8 @@ class Main extends Component {
                     <Route exact path='/'>
                         <Home/>
                     </Route>
-                    <Route path='/feed'>
-                        <Feed/>
+                    <Route path='/explore'>
+                        <Explore/>
                     </Route>
                     <Route path='/login'>
                         <Login/>

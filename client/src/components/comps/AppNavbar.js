@@ -19,7 +19,7 @@ class AppNavbar extends Component {
         const authLinks = (
             <Fragment>
                 <NavItem>
-                    <Link to="/feed"><NavLink>Feed</NavLink></Link>
+                    <Link to="/explore"><NavLink>Explore</NavLink></Link>
                 </NavItem>
                 <NavItem>
                     <Link to="/new"><NavLink>New Post</NavLink></Link>
