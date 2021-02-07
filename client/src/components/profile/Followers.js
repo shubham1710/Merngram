@@ -24,8 +24,6 @@ const Followers = () => {
                                     </div>
                                 </div>
                             </div>
-                            
-                            <div> </div>
                         </div>
                     </div>
                 </div>

@@ -312,6 +312,45 @@ h1 {
   margin-top: 20px;
 }
 
+.comment-widgets .comment-row:hover {
+  background: rgba(0, 0, 0, 0.02);
+  cursor: pointer;
+}
+
+.comment-widgets .comment-row {
+  border-bottom: 1px solid rgba(120, 130, 140, 0.13);
+  padding: 15px;
+}
+
+.comment-text:hover {
+  visibility: hidden;
+}
+
+.comment-text:hover {
+  visibility: visible;
+}
+
+.label {
+  padding: 3px 10px;
+  line-height: 13px;
+  color: #ffffff;
+  font-weight: 400;
+  border-radius: 4px;
+  font-size: 75%;
+}
+
+.round img {
+  border-radius: 100%;
+}
+
+.mt-50 {
+  margin-top: 50px;
+}
+
+.mb-50 {
+  margin-bottom: 50px;
+}
+
 /* Fallback for Edge
 -------------------------------------------------- */
 
