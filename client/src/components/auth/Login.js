@@ -37,7 +37,7 @@ class Login extends Component {
         return(
             <div className="container">
                 <Row>
-                    <div className="col-sm-9 col-md-7 col-lg-5 mx-auto">
+                    <div className="col-md-7 mx-auto">
                         <Card className="card card-signin my-5">
                             <CardBody className="card-body">
                                 <h5 className="card-title text-center">Sign In</h5>
