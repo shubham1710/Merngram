@@ -30,20 +30,6 @@ module.exports.add_post = (req,res) => {
     newPost.save().then(post => res.json(post));
 }
 
-module.exports.update_post = async (req,res) => {
-    const post = await Post.findOne({_id: req.params.id});
-    const {image, desc} = req.body;
-    if(post){
-        post.image = image;
-        post.desc = desc;
-        post = await post.save();
-        return res.json(post);
-    }
-    else{
-        res.status(500).send('Something went wrong');
-    }
-}
-
 module.exports.delete_post = (req,res) => {
     Post.findByIdAndDelete({_id: req.params.id}).then(function(post){
         res.json({success: true});
