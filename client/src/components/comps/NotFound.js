@@ -11,7 +11,7 @@ const NotFound = () => {
                 <span>4</span>
             </section>
             <div class="link-container">
-                <Link to='/home'><a class="btn btn-info">Go Back Home</a></Link>
+                <Link to='/'><a class="btn btn-info">Go Back Home</a></Link>
             </div>
         </div> 
      );
