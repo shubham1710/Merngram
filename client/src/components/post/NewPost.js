@@ -13,12 +13,14 @@ import {
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import ProgressBar from '../comps/ProgressBar';
+import { useHistory } from 'react-router-dom';
 
 const NewPost = () => {
     const [desc, setDesc] = useState('');
     const [pic, setPic] = useState('');
     const [file, setFile] = useState(null);
     const [msg, setMsg] = useState(null);
+    const history = useHistory();
 
     const types = ['image/jpeg', 'image/png', 'image/jpg', 'image/heic'];
 
@@ -35,6 +37,7 @@ const NewPost = () => {
     const onSubmit = (e) => {
         e.preventDefault(); 
         console.log({pic, desc});
+        history.push('/');
     }
 
     return(

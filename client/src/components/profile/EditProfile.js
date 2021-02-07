@@ -13,6 +13,7 @@ import {
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import ProgressBar from '../comps/ProgressBar';
+import { useHistory } from 'react-router-dom';
 
 const EditProfile = () => {
     const [name, setName] = useState('Shubham');
@@ -20,6 +21,7 @@ const EditProfile = () => {
     const [pic, setPic] = useState('');
     const [file, setFile] = useState(null);
     const [msg, setMsg] = useState(null);
+    const history = useHistory();
 
     const types = ['image/jpeg', 'image/png', 'image/jpg', 'image/heic'];
 
@@ -36,6 +38,7 @@ const EditProfile = () => {
     const onSubmit = (e) => {
         e.preventDefault(); 
         console.log({name, bio, pic});
+        history.push('/profile');
     }
 
     return(
