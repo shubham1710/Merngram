@@ -25,3 +25,6 @@ export const LIKE = 'LIKE';
 export const COMMENT = 'COMMENT';
 export const DELETE_COMMENT = 'DELETE_COMMENT';
 export const FOLLOW = 'FOLLOW';
+
+export const GET_ERRORS = 'GET_ERRORS';
+export const CLEAR_ERRORS = 'CLEAR_ERRORS';
