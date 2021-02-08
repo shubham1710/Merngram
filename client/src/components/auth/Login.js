@@ -14,7 +14,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { login } from '../../actions/authActions';
 import { clearErrors } from '../../actions/errorActions';
-import { withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router';
 
 class Login extends Component {
 
@@ -43,9 +43,9 @@ class Login extends Component {
                 this.setState({msg:null});
             }
         }
-        // If authenticated, close modal
+        // If authenticated, redirect to homepage
         if(isAuthenticated){
-            
+            this.props.history.push('/');
         }
     }
 
@@ -97,4 +97,6 @@ const mapStateToProps = (state) => ({
     error: state.error
 });
 
-export default connect(mapStateToProps,{login, clearErrors})(Login);
+const LoginWithRouter = withRouter(Login);
+
+export default connect(mapStateToProps,{login, clearErrors})(LoginWithRouter);
