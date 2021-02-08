@@ -6,13 +6,15 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getProfile } from '../../actions/profileActions';
 import { getUserPosts } from '../../actions/postActions';
+import { follow } from '../../actions/performActions';
 import { withRouter } from 'react-router';
 
 class Profile extends Component {
 
     state = {
         profileLoaded: false,
-        postLoaded: false
+        postLoaded: false,
+        following: []
     }
 
     static propTypes = {
@@ -22,7 +24,8 @@ class Profile extends Component {
         user: PropTypes.object.isRequired,
         profile: PropTypes.object.isRequired,
         post: PropTypes.object.isRequired,
-        match: PropTypes.object.isRequired
+        match: PropTypes.object.isRequired,
+        follow: PropTypes.func.isRequired
     }
 
     ongetProfile = async (id) => {
@@ -33,6 +36,17 @@ class Profile extends Component {
     ongetUserPosts = async (userId) => {
         await this.props.getUserPosts(userId);
         this.setState({postLoaded: true});
+    }
+
+    getFollowing = (profile) => {
+        var i;
+        for(i=0;i<profile.following.length;i++){
+            this.state.following.push(profile.following[i].followingId);
+        }
+    }
+
+    onfollow = async (followerId, followingId) => {
+        await this.props.follow(followerId,followingId);
     }
 
     render(){
@@ -46,6 +60,10 @@ class Profile extends Component {
 
         if(this.props.isAuthenticated && !this.props.profile.loading && this.state.profileLoaded && !this.props.post.loading && !this.state.postLoaded){
             this.ongetUserPosts(this.props.match.params.id);
+        }
+
+        if(profile){
+            this.getFollowing(profile);
         }
 
         return(
@@ -66,9 +84,12 @@ class Profile extends Component {
                             <div className="media align-items-end profile-head">
                                 <div className="profile mr-3">
                                     <img src={profile.pic} alt="..." width="130" className="rounded mb-2 img-thumbnail"/>
-                                    <Link to='/edit-profile'><a className="btn btn-outline-dark btn-sm btn-block">Edit profile</a></Link>
-                                    {/* <Button color="outline-success" className="btn-sm btn-block">Follow</Button>
-                                    <Button color="outline-danger" className="btn-sm btn-block">Unfollow</Button> */}
+                                    {user._id === profile.userId &&
+                                    <Link to='/edit-profile'><a className="btn btn-outline-dark btn-sm btn-block">Edit profile</a></Link>}
+                                    {user._id !== profile.userId && !this.state.following.includes(user._id) &&
+                                    <Button color="outline-success" className="btn-sm btn-block" onClick={this.onfollow(user._id, profile.userId)}>Follow</Button>}
+                                    {user._id !== profile.userId && this.state.following.includes(user._id) &&
+                                    <Button color="outline-danger" className="btn-sm btn-block" onClick={this.onfollow(user._id, profile.userId)}>Unfollow</Button>}
                                 </div>
                                 <div className="media-body mb-5 text-white">
                                     <h4 className="mt-0 mb-4">{profile.name}</h4>
@@ -131,4 +152,4 @@ const mapStateToProps = (state) => ({
 })
 
 
-export default connect(mapStateToProps, {getProfile, getUserPosts})(withRouter(Profile));
+export default connect(mapStateToProps, {getProfile, getUserPosts, follow})(withRouter(Profile));
