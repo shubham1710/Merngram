@@ -14,13 +14,17 @@ module.exports.get_user_posts = (req,res) => {
 }
 
 module.exports.get_following_posts = async (req,res) => {
-    const following_posts = [];
-    const userId = req.params.userId;
-    const profile = await Profile.findOne({userId});
-    const following = profile.following;
-    // following.forEach(user => {
-    //     Post.find({userId: user.follwingId}).sort({date:-1}).then(posts => following_posts = [...following_posts, ...posts]);
-    // });
+    var following_posts = [];
+    var userId = req.params.userId;
+    var profile = await Profile.findOne({userId});
+    following_posts = await Post.find({userId});
+    var following = profile.following;
+    var i;
+    for(i=0;i<following.length;i++){
+        var iterator = following[i];
+        var posts = await Post.find({userId: iterator.followingId}); 
+        following_posts = following_posts.concat(posts);
+    }  
     return res.json(following_posts);
 }
 
