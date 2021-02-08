@@ -1,6 +1,20 @@
 import {Button} from 'reactstrap';
+import PropTypes from 'prop-types';
+import { getProfile } from '../../actions/profileActions';
+import { connect } from 'react-redux';
+import { useEffect, useState } from 'react';
+import {useParams} from 'react-router-dom';
 
-const Following = () => {
+const Following = ({profile, getProfile}) => {
+
+    const { id } = useParams();
+    const [Loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        getProfile(id);
+        setLoading(false);
+    }, [setLoading])
+
     return ( 
         <div className="container mt-5">
             <div className="height-100 row d-flex justify-content-center">
@@ -33,5 +47,9 @@ const Following = () => {
         </div>
     );
 }
- 
-export default Following;
+
+const mapStateToProps = (state) => ({
+    profile: state.profile.profile
+})
+
+export default connect(mapStateToProps, {getProfile})(Following);

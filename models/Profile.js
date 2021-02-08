@@ -5,8 +5,8 @@ dotenv.config();
 
 const ProfileSchema = ({
     userId: {
-        type: String,
-        required: true
+        type: Schema.Types.ObjectId,
+        ref: 'user'
     },
     name: {
         type: String
@@ -21,14 +21,14 @@ const ProfileSchema = ({
     },
     followers: [{
         followerId: {
-            type: String,
-            required: true
+            type: Schema.Types.ObjectId,
+            ref: 'user'
         }
     }],
     following: [{
         followingId: {
-            type: String,
-            required: true
+            type: Schema.Types.ObjectId,
+            ref: 'user'
         }
     }],
 })

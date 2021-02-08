@@ -3,8 +3,8 @@ const Schema = mongoose.Schema;
 
 const PostSchema = new Schema({
     userId: {
-        type: String,
-        required: true
+        type: Schema.Types.ObjectId,
+        ref: 'user'
     },
     image: {
         type: String,
@@ -15,14 +15,14 @@ const PostSchema = new Schema({
     },
     likes: [{
         likeUser: {
-            type: String,
-            required: true
+            type: Schema.Types.ObjectId,
+            ref: 'user'
         }
     }],
     comments: [{
         cmntUser: {
-            type: String,
-            required: true
+            type: Schema.Types.ObjectId,
+            ref: 'user'
         },
         cmnt: {
             type: String,
