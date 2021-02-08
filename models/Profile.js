@@ -22,13 +22,29 @@ const ProfileSchema = ({
     followers: [{
         followerId: {
             type: Schema.Types.ObjectId,
-            ref: 'user'
+            ref: 'profile'
+        },
+        follwerName: {
+            type: String,
+            required: true
+        },
+        followerPic: {
+            type: String,
+            required: true
         }
     }],
     following: [{
         followingId: {
             type: Schema.Types.ObjectId,
-            ref: 'user'
+            ref: 'profile'
+        },
+        followingName: {
+            type: String,
+            required: true
+        },
+        followingPic: {
+            type: String,
+            required: true
         }
     }],
 })

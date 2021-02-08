@@ -1,5 +1,4 @@
 import {Button} from 'reactstrap';
-import PropTypes from 'prop-types';
 import { getProfile } from '../../actions/profileActions';
 import { connect } from 'react-redux';
 import { useEffect, useState } from 'react';

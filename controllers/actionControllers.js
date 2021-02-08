@@ -2,12 +2,13 @@ const Profile = require('../models/Profile');
 const Post = require('../models/Post');
 
 module.exports.like = async (req,res) => {
-    const userId = req.params.userId;
+    const profileId = req.params.profileId;
     const postId = req.params.postId;
     try{
         var post = await Post.findOne({_id: postId});
+        var profile = await Profile.findOne({_id: profileId});
         if(post.likes){
-            let likeIndex = post.likes.findIndex(p => p.likeUser == userId);
+            let likeIndex = post.likes.findIndex(p => p.likeUser == profileId);
             
             // if post is already liked
             if(likeIndex > -1){
@@ -15,11 +16,11 @@ module.exports.like = async (req,res) => {
             }
             // create a new like
             else{
-                post.likes.push({likeUser: userId});
+                post.likes.push({likeUser: profileId, likeName: profile.name, likePic: profile.pic});
             }
         }
         else{
-            post.likes = [{likeUser: userId}];
+            post.likes = [{likeUser: profileId, likeName: profile.name, likePic: profile.pic}];
         }
         post = await post.save();
         return res.json(post);
@@ -31,15 +32,16 @@ module.exports.like = async (req,res) => {
 }
 
 module.exports.comment = async (req,res) => {
-    const userId = req.params.userId;
+    const profileId = req.params.profileId;
     const postId = req.params.postId;
     const {cmnt} = req.body;
     var post = await Post.findOne({_id: postId});
+    var profile = await Profile.findOne({_id: profileId});
     if(post.comments){
-        post.comments.push({cmntUser: userId, cmnt: cmnt});
+        post.comments.push({cmntUser: profileId, cmntName: profile.name, cmntPic: profile.pic, cmnt: cmnt});
     }
     else{
-        post.comments = [{cmntUser: userId, cmnt: cmnt}];
+        post.comments = [{cmntUser: profileId, cmntName: profile.name, cmntPic: profile.pic, cmnt: cmnt}];
     }
     post = await post.save();
     return res.json(post);
@@ -62,8 +64,8 @@ module.exports.follow = async (req,res) => {
     const follower = req.params.followerId;
     const following = req.params.followingId;
     try{
-        var follower_profile = await Profile.findOne({userId: follower});
-        var following_profile = await Profile.findOne({userId: following});
+        var follower_profile = await Profile.findOne({_id: follower});
+        var following_profile = await Profile.findOne({_id: following});
 
         // add the person to following list of the follower
         if(follower_profile.following){
@@ -73,13 +75,13 @@ module.exports.follow = async (req,res) => {
             if(followingIndex > -1){
                 follower_profile.following.splice(followingIndex,1);
             }
-            // user is not followed
+            // user is not already followed
             else{
-                follower_profile.following.push({followingId: following});
+                follower_profile.following.push({followingId: following, followingName: following_profile.name, followingPic: following_profile.pic});
             }
         }
         else{
-            follower_profile.following = [{followingId: following}];
+            follower_profile.following = [{followingId: following, followingName: following_profile.name, followingPic: following_profile.pic}];
         }
 
         // add the following person to follower list
@@ -90,13 +92,13 @@ module.exports.follow = async (req,res) => {
             if(followerIndex > -1){
                 following_profile.followers.splice(follwerIndex,1);
             }
-            // user is not a follower
+            // user is not already a follower
             else{
-                following_profile.followers.push({followerId: follower});
+                following_profile.followers.push({followerId: follower, followerName: follower_profile.name, followerPic: follower_profile.pic});
             }
         }
         else{
-            following_profile.followers = [{followerId: follower}];
+            following_profile.followers = [{followerId: follower, followerName: follower_profile.name, followerPic: follower_profile.pic}];
         }
 
         follower_profile = await follower_profile.save();

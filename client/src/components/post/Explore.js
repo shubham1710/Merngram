@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion';
-import PropTypes from 'prop-types';
 import { getAllPosts } from '../../actions/postActions';
 import { connect } from 'react-redux';
 import { useEffect, useState } from 'react';
