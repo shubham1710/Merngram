@@ -12,8 +12,8 @@ export const getProfile = (id) => dispatch => {
         .catch(err => dispatch(returnErrors(err.response.data, err.response.status)));
 }
 
-export const editProfile = (id) => dispatch => {
-    axios.post(`/api/profile/${id}`)
+export const editProfile = (id, profile) => dispatch => {
+    axios.put(`/api/profile/${id}`, profile)
         .then(res => dispatch({
             type: EDIT_PROFILE,
             payload: res.data
