@@ -12,16 +12,46 @@ import {
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { login } from '../../actions/authActions';
+import { clearErrors } from '../../actions/errorActions';
+import { withRouter } from 'react-router-dom';
 
 class Login extends Component {
+
     state = {
         email: '',
         password: '',
         msg: null
     };
 
+    static propTypes = {
+        isAuthenticated: PropTypes.bool,
+        error: PropTypes.object.isRequired,
+        login: PropTypes.func.isRequired,
+        clearErrors: PropTypes.func.isRequired,
+        history: PropTypes.object.isRequired
+    }
+
+    componentDidUpdate(prevProps) {
+        const { error, isAuthenticated } = this.props;
+        if(error !== prevProps.error){
+            // Check for register error
+            if(error.id === 'LOGIN_FAIL'){
+                this.setState({msg: error.msg.msg});
+            }
+            else{
+                this.setState({msg:null});
+            }
+        }
+        // If authenticated, close modal
+        if(isAuthenticated){
+            
+        }
+    }
+
     onChange = (e) => {
         this.setState({[e.target.name]:e.target.value});
+
     }
 
     onSubmit = (e) => {
@@ -30,7 +60,7 @@ class Login extends Component {
         const {email, password} = this.state;
         const user = {email, password};
 
-        console.log(user);
+        this.props.login(user);
     }
 
     render(){
@@ -62,4 +92,9 @@ class Login extends Component {
     }
 }
 
-export default Login;
+const mapStateToProps = (state) => ({
+    isAuthenticated: state.auth.isAuthenticated,
+    error: state.error
+});
+
+export default connect(mapStateToProps,{login, clearErrors})(Login);

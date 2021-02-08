@@ -3,10 +3,15 @@ import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, Container, 
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { Logout } from '../auth/Logout';
 
 class AppNavbar extends Component {
     state = {
         isOpen: false
+    }
+
+    static propTypes = {
+        auth: PropTypes.object.isRequired
     }
 
     toggle = () => {
@@ -16,6 +21,7 @@ class AppNavbar extends Component {
     }
 
     render(){
+        const { isAuthenticated, user } = this.props.auth;
         const authLinks = (
             <Fragment>
                 <NavItem>
@@ -28,7 +34,7 @@ class AppNavbar extends Component {
                     <Link to={`/profile/id`}><NavLink>Profile</NavLink></Link>
                 </NavItem>
                 <NavItem>
-                    <NavLink href="/logout">Logout</NavLink>
+                    <Logout/>
                 </NavItem>
             </Fragment>
         );
@@ -51,7 +57,7 @@ class AppNavbar extends Component {
                     <NavbarToggler onClick={this.toggle}/>
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar> 
-                            {authLinks}{guestLinks}                               
+                            { isAuthenticated ? authLinks: guestLinks}                               
                         </Nav>
                     </Collapse>
                 </Container>
@@ -60,4 +66,9 @@ class AppNavbar extends Component {
     }
 }
 
-export default AppNavbar;
+const mapStateToProps = state => ({
+    auth: state.auth
+})
+
+
+export default connect(mapStateToProps, null)(AppNavbar);
