@@ -1,4 +1,4 @@
-import { POST_LOADING, GET_ALL_POSTS, GET_SINGLE_POST, GET_USER_POSTS, GET_FOLLOWING_POSTS, ADD_POST, DELETE_POST } from '../actions/types';
+import { POST_LOADING, GET_ALL_POSTS, GET_SINGLE_POST, GET_USER_POSTS, GET_FOLLOWING_POSTS, ADD_POST, DELETE_POST, LIKE, COMMENT, DELETE_COMMENT } from '../actions/types';
 
 const initialState = {
     allPosts: [],
@@ -48,6 +48,24 @@ export default function(state=initialState, action){
             return{
                 ...state,
                 allPosts: state.allPosts.filter(post => post._id!==action.payload)
+            }
+
+        case LIKE:
+            return{
+                ...state,
+                singlePost: action.payload
+            }
+
+        case COMMENT:
+            return{
+                ...state,
+                singlePost: action.payload
+            }
+
+        case DELETE_COMMENT:
+            return{
+                ...state,
+                singlePost: action.payload
             }
 
         case POST_LOADING:

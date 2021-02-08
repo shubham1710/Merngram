@@ -6,7 +6,7 @@ export const like = (userId, postId) => dispatch => {
     axios.post(`/api/like/${userId}/${postId}`)
         .then(res => dispatch({
             type: LIKE,
-            payload: res.data
+            payload: postId
         }))
         .catch(err => dispatch(returnErrors(err.response.data, err.response.status)));
 }
