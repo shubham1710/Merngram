@@ -61,9 +61,6 @@ class Profile extends Component {
                             </CardBody>
                         </Card>
                     }
-
-                    
-                    
                     {user && profile && <div className="bg-white shadow rounded overflow-hidden">
                         <div className="px-4 pt-0 pb-4 cover">
                             <div className="media align-items-end profile-head">
@@ -82,13 +79,13 @@ class Profile extends Component {
                             <ul className="list-inline mb-0">
                                 <li className="list-inline-item">
                                     <h5 className="font-weight-bold mb-0 d-block">{profile.followers.length}</h5>
-                                    <Link to={`/followers/id`}>
+                                    <Link to={`/followers/${profile.userId}`}>
                                         <small className="text-muted"> <i className="fas fa-user mr-1"></i>Followers</small>
                                     </Link>
                                 </li>
                                 <li className="list-inline-item">
                                     <h5 className="font-weight-bold mb-0 d-block">{profile.following.length}</h5>
-                                    <Link to={`/following/id`}>
+                                    <Link to={`/following/${profile.userId}`}>
                                         <small className="text-muted"> <i className="fas fa-user mr-1"></i>Following</small>
                                     </Link>
                                 </li>
@@ -103,7 +100,7 @@ class Profile extends Component {
                         <div className="py-4 px-4">
                             <div className="d-flex align-items-center justify-content-between mb-3">
                                 <h5 className="mb-0">Recent photos</h5>
-                                <Link to={`/photos/id`}>
+                                <Link to={`/photos/${profile.userId}`}>
                                     <a className="btn btn-link text-muted">Show all</a>
                                 </Link>
                             </div>
