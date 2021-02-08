@@ -12,6 +12,9 @@ import {
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { register } from '../../actions/authActions';
+import { clearErrors } from '../../actions/errorActions';
+import { withRouter } from 'react-router';
 
 class Register extends Component {
     state = {
@@ -20,6 +23,32 @@ class Register extends Component {
         password: '',
         msg: null
     };
+
+    static propTypes = {
+        isAuthenticated: PropTypes.bool,
+        error: PropTypes.object.isRequired,
+        register: PropTypes.func.isRequired,
+        clearErrors: PropTypes.func.isRequired,
+        history: PropTypes.object.isRequired
+    }
+
+    componentDidUpdate(prevProps) {
+        const { error, isAuthenticated } = this.props;
+        if(error !== prevProps.error){
+            // Check for register error
+            if(error.id === 'REGISTER_FAIL'){
+                this.setState({msg: error.msg.msg});
+            }
+            else{
+                this.setState({msg:null});
+            }
+        }
+
+        // If authenticated, redirect to homepage
+        if(isAuthenticated){
+            this.props.history.push('/');
+        }
+    }
 
     onChange = (e) => {
         this.setState({[e.target.name]:e.target.value});
@@ -31,7 +60,7 @@ class Register extends Component {
         const {username, email, password} = this.state;
         const user = {username, email, password};
 
-        console.log(user);
+        this.props.register(user);
     }
 
     render(){
@@ -67,4 +96,11 @@ class Register extends Component {
     }
 }
 
-export default Register;
+const mapStateToProps = (state) => ({
+    isAuthenticated: state.auth.isAuthenticated,
+    error: state.error
+});
+
+const RegisterWithRouter = withRouter(Register);
+
+export default connect(mapStateToProps,{register, clearErrors})(RegisterWithRouter);
