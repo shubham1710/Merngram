@@ -2,13 +2,13 @@ const Profile = require('../models/Profile');
 const Post = require('../models/Post');
 
 module.exports.like = async (req,res) => {
-    const profileId = req.params.profileId;
+    const userId = req.params.userId;
     const postId = req.params.postId;
     try{
         var post = await Post.findOne({_id: postId});
-        var profile = await Profile.findOne({_id: profileId});
+        var profile = await Profile.findOne({userId: userId});
         if(post.likes){
-            let likeIndex = post.likes.findIndex(p => p.likeUser == profileId);
+            let likeIndex = post.likes.findIndex(p => p.likeUser == userId);
             
             // if post is already liked
             if(likeIndex > -1){
@@ -16,11 +16,11 @@ module.exports.like = async (req,res) => {
             }
             // create a new like
             else{
-                post.likes.push({likeUser: profileId, likeName: profile.name, likePic: profile.pic});
+                post.likes.push({likeUser: userId, likeName: profile.name, likePic: profile.pic});
             }
         }
         else{
-            post.likes = [{likeUser: profileId, likeName: profile.name, likePic: profile.pic}];
+            post.likes = [{likeUser: userId, likeName: profile.name, likePic: profile.pic}];
         }
         post = await post.save();
         return res.json(post);
@@ -32,11 +32,12 @@ module.exports.like = async (req,res) => {
 }
 
 module.exports.comment = async (req,res) => {
-    const profileId = req.params.profileId;
+    const userId = req.params.userId;
     const postId = req.params.postId;
     const {cmnt} = req.body;
     var post = await Post.findOne({_id: postId});
-    var profile = await Profile.findOne({_id: profileId});
+    var profile = await Profile.findOne({userId: userId});
+    const profileId = profile._id;
     if(post.comments){
         post.comments.push({cmntUser: profileId, cmntName: profile.name, cmntPic: profile.pic, cmnt: cmnt});
     }
@@ -64,8 +65,8 @@ module.exports.follow = async (req,res) => {
     const follower = req.params.followerId;
     const following = req.params.followingId;
     try{
-        var follower_profile = await Profile.findOne({_id: follower});
-        var following_profile = await Profile.findOne({_id: following});
+        var follower_profile = await Profile.findOne({userId: follower});
+        var following_profile = await Profile.findOne({userId: following});
 
         // add the person to following list of the follower
         if(follower_profile.following){
@@ -90,7 +91,7 @@ module.exports.follow = async (req,res) => {
 
             // if user is already a follwer
             if(followerIndex > -1){
-                following_profile.followers.splice(follwerIndex,1);
+                following_profile.followers.splice(followerIndex,1);
             }
             // user is not already a follower
             else{
