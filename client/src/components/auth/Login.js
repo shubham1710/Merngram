@@ -1,15 +1,5 @@
 import { Component } from 'react';
-import {
-    Row,
-    Card,
-    Button,
-    Form,
-    FormGroup,
-    Label,
-    Input,
-    Alert,
-    CardBody
-} from 'reactstrap';
+import { Row, Card, Button, Form, FormGroup, Label, Input, Alert, CardBody } from 'reactstrap';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { login } from '../../actions/authActions';

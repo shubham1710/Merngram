@@ -34,7 +34,7 @@ class AppNavbar extends Component {
                     <Link to={`/profile/id`}><NavLink>Profile</NavLink></Link>
                 </NavItem>
                 <NavItem>
-                    <Logout/>
+                    <Link to="/logout"><NavLink>Logout</NavLink></Link>
                 </NavItem>
             </Fragment>
         );

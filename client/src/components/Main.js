@@ -13,6 +13,7 @@ import Explore from './post/Explore';
 import PostDetail from './post/PostDetail';
 import NewPost from './post/NewPost';
 import NotFound from './comps/NotFound';
+import Logout from './auth/Logout';
 
 class Main extends Component {
     render(){
@@ -27,6 +28,9 @@ class Main extends Component {
                     </Route>
                     <Route path='/login'>
                         <Login/>
+                    </Route>
+                    <Route path='/logout'>
+                        <Logout/>
                     </Route>
                     <Route path='/register'>
                         <Register/>
