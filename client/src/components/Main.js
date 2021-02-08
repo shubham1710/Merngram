@@ -35,22 +35,22 @@ class Main extends Component {
                     <Route path='/register'>
                         <Register/>
                     </Route>
-                    <Route path='/profile/:id'>
+                    <Route exact path='/profile/:id'>
                         <Profile/>
                     </Route>
-                    <Route path='/followers/:id'>
+                    <Route exact path='/followers/:id'>
                         <Followers/>
                     </Route>
-                    <Route path='/following/:id'>
+                    <Route exact path='/following/:id'>
                         <Following/>
                     </Route>
-                    <Route path='/photos/:id'>
+                    <Route exact path='/photos/:id'>
                         <Photos/>
                     </Route>
                     <Route path='/edit-profile'>
                         <EditProfile/>
                     </Route>
-                    <Route path='/post/:id'>
+                    <Route exact path='/post/:id'>
                         <PostDetail/>
                     </Route>
                     <Route path='/new'>

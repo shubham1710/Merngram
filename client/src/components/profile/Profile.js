@@ -1,38 +1,93 @@
 import { Component } from 'react';
-import {Button} from 'reactstrap';
+import {Button, Card, CardBody} from 'reactstrap';
 import {Link} from 'react-router-dom';
 import { motion } from 'framer-motion';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { getProfile } from '../../actions/profileActions';
+import { getUserPosts } from '../../actions/postActions';
+import { withRouter } from 'react-router';
 
 class Profile extends Component {
+
+    state = {
+        profileLoaded: false,
+        postLoaded: false
+    }
+
+    static propTypes = {
+        getProfile: PropTypes.func.isRequired,
+        getUserPosts: PropTypes.func.isRequired,
+        isAuthenticated: PropTypes.bool,
+        user: PropTypes.object.isRequired,
+        profile: PropTypes.object.isRequired,
+        post: PropTypes.object.isRequired,
+        match: PropTypes.object.isRequired
+    }
+
+    ongetProfile = async (id) => {
+        await this.props.getProfile(id);
+        this.setState({profileLoaded: true});
+    }
+
+    ongetUserPosts = async (userId) => {
+        await this.props.getUserPosts(userId);
+        this.setState({postLoaded: true});
+    }
+
     render(){
-        const user = 'Shubham';
+        const user = this.props.user;
+        const profile = this.props.profile.profile;
+        const userPosts = this.props.post.userPosts;
+
+        if(this.props.isAuthenticated && !this.props.profile.loading && !this.state.profileLoaded){
+            this.ongetProfile(this.props.match.params.id);
+        }
+
+        if(this.props.isAuthenticated && !this.props.profile.loading && this.state.profileLoaded && !this.props.post.loading && !this.state.postLoaded){
+            this.ongetUserPosts(this.props.match.params.id);
+        }
+
         return(
             <div className="row py-5 px-4">
                 <div className="col-md-9 mx-auto">
-                    <div className="bg-white shadow rounded overflow-hidden">
+                    {!user &&
+                        <Card className="card-signin">
+                            <CardBody>
+                                <h5 className="card-title text-center"><b>Login to view this page</b></h5>
+                                <div className="form-signin">
+                                    <Link to="/login"><Button color="success" className="text-uppercase btn-block">Login</Button></Link>
+                                </div>
+                            </CardBody>
+                        </Card>
+                    }
+
+                    
+                    
+                    {user && profile && <div className="bg-white shadow rounded overflow-hidden">
                         <div className="px-4 pt-0 pb-4 cover">
                             <div className="media align-items-end profile-head">
                                 <div className="profile mr-3">
-                                    <img src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80" alt="..." width="130" className="rounded mb-2 img-thumbnail"/>
+                                    <img src={profile.pic} alt="..." width="130" className="rounded mb-2 img-thumbnail"/>
                                     <Link to='/edit-profile'><a className="btn btn-outline-dark btn-sm btn-block">Edit profile</a></Link>
                                     {/* <Button color="outline-success" className="btn-sm btn-block">Follow</Button>
                                     <Button color="outline-danger" className="btn-sm btn-block">Unfollow</Button> */}
                                 </div>
                                 <div className="media-body mb-5 text-white">
-                                    <h4 className="mt-0 mb-4">Kumar Shubham</h4>
+                                    <h4 className="mt-0 mb-4">{profile.name}</h4>
                                 </div>
                             </div>
                         </div>
                         <div className="bg-light p-4 d-flex justify-content-end text-center">
                             <ul className="list-inline mb-0">
                                 <li className="list-inline-item">
-                                    <h5 className="font-weight-bold mb-0 d-block">745</h5>
+                                    <h5 className="font-weight-bold mb-0 d-block">{profile.followers.length}</h5>
                                     <Link to={`/followers/id`}>
                                         <small className="text-muted"> <i className="fas fa-user mr-1"></i>Followers</small>
                                     </Link>
                                 </li>
                                 <li className="list-inline-item">
-                                    <h5 className="font-weight-bold mb-0 d-block">340</h5>
+                                    <h5 className="font-weight-bold mb-0 d-block">{profile.following.length}</h5>
                                     <Link to={`/following/id`}>
                                         <small className="text-muted"> <i className="fas fa-user mr-1"></i>Following</small>
                                     </Link>
@@ -42,7 +97,7 @@ class Profile extends Component {
                         <div className="px-4 py-3">
                             <h5 className="mb-1">About</h5>
                             <div className="p-4 rounded shadow-sm bg-light">
-                                <p className="font-italic mb-0">Full Stack Web Developer</p>
+                                <p className="font-italic mb-0">{profile.bio}</p>
                             </div>
                         </div>
                         <div className="py-4 px-4">
@@ -53,41 +108,30 @@ class Profile extends Component {
                                 </Link>
                             </div>
                             <div className="row">
-                <div className="col-md-3 mb-3">
-                    <motion.img src="https://images.unsplash.com/photo-1469594292607-7bd90f8d3ba4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80" alt="" className="img-fluid rounded shadow-sm"
-                     initial={{ opacity: 0 }}
-                     animate={{ opacity: 1 }}
-                     transition={{ delay: 0.5 }}
-                    />
-                </div>
-                <div className="col-md-3 mb-3">
-                    <motion.img src="https://images.unsplash.com/photo-1493571716545-b559a19edd14?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80" alt="" className="img-fluid rounded shadow-sm"
-                     initial={{ opacity: 0 }}
-                     animate={{ opacity: 1 }}
-                     transition={{ delay: 0.5 }}
-                    />
-                </div>
-                <div className="col-md-3 mb-3">
-                    <motion.img src="https://images.unsplash.com/photo-1453791052107-5c843da62d97?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80" alt="" className="img-fluid rounded shadow-sm"
-                     initial={{ opacity: 0 }}
-                     animate={{ opacity: 1 }}
-                     transition={{ delay: 0.5 }}
-                    />
-                </div>
-                <div className="col-md-3 mb-3">
-                    <motion.img src="https://images.unsplash.com/photo-1475724017904-b712052c192a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80" alt="" className="img-fluid rounded shadow-sm"
-                     initial={{ opacity: 0 }}
-                     animate={{ opacity: 1 }}
-                     transition={{ delay: 0.5 }}
-                    />
-                </div>
-            </div>
+                            {userPosts && userPosts.map((post)=>(
+                                <div className="col-md-3 mb-3">
+                                    <motion.img src={post.image} alt="" className="img-fluid rounded shadow-sm"
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{ delay: 0.5 }}
+                                    />
+                                </div>
+                            ))}
+                            </div>
                         </div>
-                    </div>
+                    </div>}
                 </div>
             </div>
         )
     }
 }
 
-export default Profile;
+const mapStateToProps = (state) => ({
+    profile: state.profile,
+    isAuthenticated: state.auth.isAuthenticated,
+    user: state.auth.user,
+    post: state.post
+})
+
+
+export default connect(mapStateToProps, {getProfile, getUserPosts})(withRouter(Profile));

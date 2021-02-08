@@ -31,7 +31,7 @@ class AppNavbar extends Component {
                     <Link to="/new"><NavLink>New Post</NavLink></Link>
                 </NavItem>
                 <NavItem>
-                    <Link to={`/profile/id`}><NavLink>Profile</NavLink></Link>
+                    {user && <Link to={`/profile/${user._id}`}><NavLink>Profile</NavLink></Link>}
                 </NavItem>
                 <NavItem>
                     <Link to="/logout"><NavLink>Logout</NavLink></Link>
