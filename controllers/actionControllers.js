@@ -22,7 +22,7 @@ module.exports.like = async (req,res) => {
             post.likes = [{likeUser: userId}];
         }
         post = await post.save();
-        return res.json({success: true});
+        return res.json(post);
     }
     catch (err) {
         console.log(err);
@@ -42,7 +42,7 @@ module.exports.comment = async (req,res) => {
         post.comments = [{cmntUser: userId, cmnt: cmnt}];
     }
     post = await post.save();
-    return res.json({success: true});
+    return res.json(post);
 }
 
 module.exports.delete_comment = async (req,res) => {
@@ -55,7 +55,7 @@ module.exports.delete_comment = async (req,res) => {
         post.comments.splice(cmntIndex,1);
     }
     post = await post.save();
-    return res.json({success: true});
+    return res.json(post);
 }
 
 module.exports.follow = async (req,res) => {
@@ -101,7 +101,7 @@ module.exports.follow = async (req,res) => {
 
         follower_profile = await follower_profile.save();
         following_profile = await following_profile.save();
-        return res.json({success: true});
+        return res.json(post);
     }
     catch (err) {
         console.log(err);
