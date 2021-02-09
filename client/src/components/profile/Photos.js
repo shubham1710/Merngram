@@ -49,11 +49,11 @@ class Photos extends Component {
                     }
                     {userPosts && userPosts.map((post)=>(
                         <div className="col-md-3 mb-3">
-                            <motion.img src={post.image} alt="" className="img-fluid rounded shadow-sm"
+                            <Link to={`/post/${post.userId}`}><motion.img src={post.image} alt="" className="img-fluid rounded shadow-sm"
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ delay: 0.5 }}
-                            />
+                            /></Link>
                         </div>
                     ))}
                 </div>

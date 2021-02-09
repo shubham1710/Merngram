@@ -60,10 +60,6 @@ class Home extends Component {
                                     <CardImg src={post.image}></CardImg>
                                 </Link>
                                 <CardText tag="h6" className="mt-3">{post.desc}</CardText>
-                                <hr my-1/>
-                                <Button color="success" className="mr-2">Like</Button>
-                                <Button color="danger" className="mr-2">Unlike</Button>
-                                <Link to={`/post/${post._id}`}><Button color="info">Comment</Button></Link>
                             </CardBody>
                         </Card>))}
                     </div>

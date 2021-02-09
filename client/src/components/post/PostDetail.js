@@ -2,12 +2,11 @@ import { useState, useEffect } from 'react';
 import {Card, Button, Form, FormGroup, Label, Input, CardBody, CardText, CardImg, CardHeader} from 'reactstrap';
 import { connect } from 'react-redux';
 import {getSinglePost} from '../../actions/postActions';
-import {comment, deleteComment} from '../../actions/performActions';
+import {comment, deleteComment, like} from '../../actions/performActions';
 import { motion } from 'framer-motion';
 import {Link, useParams} from 'react-router-dom';
-import { get } from 'mongoose';
 
-const PostDetail = ({getSinglePost, user, post, comment, deleteComment}) => {
+const PostDetail = ({getSinglePost, user, post, comment, deleteComment, like}) => {
     const { id } = useParams();
     const [cmnt, setCmnt] = useState('');
     const [isPending, setPending] = useState(true);
@@ -26,6 +25,11 @@ const PostDetail = ({getSinglePost, user, post, comment, deleteComment}) => {
 
     const onDelete = async (postId, commentId) => {
         await deleteComment(postId, commentId);
+        await getSinglePost(id);
+    }
+
+    const onLike = async (userId, postId) => {
+        await like(userId, postId);
         await getSinglePost(id);
     }
 
@@ -57,9 +61,8 @@ const PostDetail = ({getSinglePost, user, post, comment, deleteComment}) => {
                         <CardBody>
                             <CardImg src={post.singlePost.image} alt="" className="img-fluid rounded shadow-sm"></CardImg>
                             <CardText tag="h5" className="mt-2">{post.singlePost.desc}</CardText>
-                            <Button color="success" className="mr-2">Like</Button>
-                            <Button color="danger" className="mr-2">Unike</Button>
-                            <Button color="info">Comment</Button>
+                            <button className="mr-2 btn btn-info">Like | {post.singlePost.likes.length}</button>
+                            <button className="mr-2 btn btn-outline-info">Like | {post.singlePost.likes.length}</button>
                         </CardBody>
                     </Card>
 
@@ -76,7 +79,7 @@ const PostDetail = ({getSinglePost, user, post, comment, deleteComment}) => {
                             <div className="col-md-12 mx-auto">
                                 <Card >
                                     <CardHeader>
-                                        <CardText tag="h4">Comments</CardText>
+                                        <CardText tag="h4">Comments ({post.singlePost.comments.length})</CardText>
                                     </CardHeader>
                                     <motion.div className="comment-widgets m-b-20" layout>
                                         {post.singlePost.comments.map((comment) => (<motion.div className="d-flex flex-row comment-row" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}>
