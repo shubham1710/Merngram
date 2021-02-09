@@ -1,23 +1,14 @@
-import { useState } from 'react';
-import {
-    Row,
-    Card,
-    Button,
-    Form,
-    FormGroup,
-    Label,
-    Input,
-    Alert,
-    CardBody
-} from 'reactstrap';
+import { useState, useEffect } from 'react';
+import { Row, Card, Button, Form, FormGroup, Label, Input, Alert, CardBody } from 'reactstrap';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import ProgressBar from '../comps/ProgressBar';
 import { useHistory } from 'react-router-dom';
+import {addPost} from '../../actions/postActions';
+import {Link} from 'react-router-dom';
 
-const NewPost = () => {
+const NewPost = ({addPost, user}) => {
     const [desc, setDesc] = useState('');
-    const [pic, setPic] = useState('');
+    const [image, setImage] = useState('');
     const [file, setFile] = useState(null);
     const [msg, setMsg] = useState(null);
     const history = useHistory();
@@ -34,9 +25,11 @@ const NewPost = () => {
         }
     }
 
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault(); 
-        console.log({pic, desc});
+        const userId = user._id;
+        const newPost = {userId, image, desc};
+        await addPost(newPost);
         history.push('/');
     }
 
@@ -44,19 +37,29 @@ const NewPost = () => {
         <div className="container">
             <Row>
                 <div className="col-md-7 mx-auto">
+                    {!user &&
+                        <Card className="card-signin">
+                            <CardBody>
+                                <h5 className="card-title text-center"><b>Login to view this page</b></h5>
+                                <div className="form-signin">
+                                    <Link to="/login"><Button color="success" className="text-uppercase btn-block">Login</Button></Link>
+                                </div>
+                            </CardBody>
+                        </Card>
+                    }
                     <Card className="card card-signin my-5">
                         <CardBody className="card-body">
                             <h5 className="card-title text-center"><b>Add a new Photo</b></h5>
                             {msg ? (<Alert color="danger">{msg}</Alert>):null}
-                            {pic && <img src={pic} alt="Profile image" className="d-block mx-auto img-fluid img-thumbnail mb-4"></img>}
+                            {image && <img src={image} alt="Profile image" className="d-block mx-auto img-fluid img-thumbnail mb-4"></img>}
                             <Form className="form-signin" onSubmit={onSubmit}>
                                 <Label className="upload-label upload-form">
-                                    <Input type="file" id="pic" name="pic" onChange={changeHandler}/>
+                                    <Input type="file" id="image" name="image" onChange={changeHandler}/>
                                     <span>+</span>
                                 </Label>
                                 <div className="output mb-2">
                                     {file && <div >{file.name}</div>}
-                                    {file && <ProgressBar file={file} setFile={setFile} setPic={setPic}/>}
+                                    {file && <ProgressBar file={file} setFile={setFile} setPic={setImage}/>}
                                 </div>
                                 <FormGroup className="form-label-group">
                                     <Input type="text" id="desc" name="desc" className="form-control" placeholder="Description" onChange={(e) => setDesc(e.target.value)} required autofocus/>
@@ -71,5 +74,9 @@ const NewPost = () => {
         </div>
     )
 }
+
+const mapStateToProps = (state) => ({
+    user: state.auth.user
+})
  
-export default NewPost;
+export default connect(mapStateToProps,{addPost})(NewPost);

@@ -28,9 +28,10 @@ module.exports.get_following_posts = async (req,res) => {
     return res.json(following_posts);
 }
 
-module.exports.add_post = (req,res) => {
+module.exports.add_post = async (req,res) => {
     const {userId, image, desc} = req.body;
-    const newPost = new Post({userId, image, desc, likes: [], comments: []});
+    const profile = await Profile.findOne({userId});
+    const newPost = new Post({userId, name: profile.name, pic: profile.pic, image, desc, likes: [], comments: []});
     newPost.save().then(post => res.json(post));
 }
 
