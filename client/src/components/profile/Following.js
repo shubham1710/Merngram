@@ -19,7 +19,7 @@ const Following = ({profile, getProfile, user}) => {
             <div className="height-100 row d-flex justify-content-center">
                 <div className="col-md-7">
                 <h3 className="mb-2">Following</h3>
-                {profile && profile.following.map((following) => (
+                {profile && profile.following && profile.following.map((following) => (
                     <div className="p-3 bg-white rounded">
                         <div className="d-flex justify-content-between">
                             <div className="d-flex flex-row align-items-center">

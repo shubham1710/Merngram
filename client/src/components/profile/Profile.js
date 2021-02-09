@@ -45,16 +45,25 @@ class Profile extends Component {
         this.setState({postLoaded: true});
     }
 
-    getFollowing = (profile) => {
+    getFollowing = (currProfile, profile) => {
         var i;
-        for(i=0;i<profile.following.length;i++){
-            this.state.following.push(profile.following[i].followingId);
+        for(i=0;i<currProfile.following.length;i++){
+            this.state.following.push(currProfile.following[i].followingId);
         }
+
         this.setState({followLoaded: true});
     }
 
     onfollow = async (followerId, followingId) => {
         await this.props.follow(followerId,followingId);
+    }
+
+    componentDidUpdate(prevProps, prevState){
+        if(prevProps.match.params.id !== this.props.match.params.id)
+        {
+            this.ongetProfile(this.props.match.params.id);
+            this.ongetUserPosts(this.props.match.params.id);
+        }
     }
 
     render(){
@@ -77,7 +86,7 @@ class Profile extends Component {
         }
 
         if(currProfile && !this.state.followLoaded){
-            this.getFollowing(currProfile);
+            this.getFollowing(currProfile, profile);
         }
 
         return(
@@ -101,9 +110,9 @@ class Profile extends Component {
                                     {user._id === profile.userId &&
                                     <Link to='/edit-profile'><a className="btn btn-outline-dark btn-sm btn-block">Edit profile</a></Link>}
                                     {user._id !== profile.userId && !this.state.following.includes(profile.userId) &&
-                                    <Button color="outline-success" className="btn-sm btn-block" onClick={() => {this.onfollow(user._id, profile.userId)}}>Follow</Button>}
+                                    <a href={`/profile/${profile.userId}`}><Button color="outline-success" className="btn-sm btn-block" onClick={() => {this.onfollow(user._id, profile.userId)}}>Follow</Button></a>}
                                     {user._id !== profile.userId && this.state.following.includes(profile.userId) &&
-                                    <Button color="outline-danger" className="btn-sm btn-block" onClick={() => {this.onfollow(user._id, profile.userId)}}>Unfollow</Button>}
+                                    <a href={`/profile/${profile.userId}`}><Button color="outline-danger" className="btn-sm btn-block" onClick={() => {this.onfollow(user._id, profile.userId)}}>Unfollow</Button></a>}
                                 </div>
                                 <div className="media-body mb-5 text-white">
                                     <h4 className="mt-0 mb-4">{profile.name}</h4>
