@@ -104,7 +104,7 @@ module.exports.follow = async (req,res) => {
 
         follower_profile = await follower_profile.save();
         following_profile = await following_profile.save();
-        return res.json(following_profile);
+        return res.json({following_profile, follower_profile});
     }
     catch (err) {
         console.log(err);
