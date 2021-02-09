@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import ProgressBar from '../comps/ProgressBar';
 import { useHistory } from 'react-router-dom';
 import { editProfile, getCurrentProfile } from '../../actions/profileActions';
+import {Link} from 'react-router-dom'
 
 const EditProfile = ({profile, editProfile, user, getCurrentProfile}) => {
     const [name, setName] = useState(profile.currProfile.name);

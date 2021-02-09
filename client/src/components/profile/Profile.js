@@ -115,7 +115,8 @@ class Profile extends Component {
                                     <a href={`/profile/${profile.userId}`}><Button color="outline-danger" className="btn-sm btn-block" onClick={() => {this.onfollow(user._id, profile.userId)}}>Unfollow</Button></a>}
                                 </div>
                                 <div className="media-body mb-5 text-white">
-                                    <h4 className="mt-0 mb-4">{profile.name}</h4>
+                                    <h4 className="mt-0">{profile.name}</h4>
+                                    <h6 className="mt-0 mb-4"><i>@{user.username}</i></h6>
                                 </div>
                             </div>
                         </div>
