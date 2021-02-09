@@ -1,29 +1,26 @@
-import { useState } from 'react';
-import {
-    Row,
-    Card,
-    Button,
-    Form,
-    FormGroup,
-    Label,
-    Input,
-    Alert,
-    CardBody
-} from 'reactstrap';
+import { useState, useEffect } from 'react';
+import {Row, Card, Button, Form, FormGroup, Label, Input, Alert, CardBody } from 'reactstrap';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import ProgressBar from '../comps/ProgressBar';
 import { useHistory } from 'react-router-dom';
+import { editProfile, getCurrentProfile } from '../../actions/profileActions';
 
-const EditProfile = () => {
-    const [name, setName] = useState('Shubham');
-    const [bio, setBio] = useState('Web Developer');
-    const [pic, setPic] = useState('');
+const EditProfile = ({profile, editProfile, user, getCurrentProfile}) => {
+    const [name, setName] = useState(profile.currProfile.name);
+    const [bio, setBio] = useState(profile.currProfile.bio);
+    const [pic, setPic] = useState(profile.currProfile.pic);
     const [file, setFile] = useState(null);
     const [msg, setMsg] = useState(null);
+    const [isPending, setPending] = useState(false);
     const history = useHistory();
 
     const types = ['image/jpeg', 'image/png', 'image/jpg', 'image/heic'];
+
+    useEffect(async () => {
+        await getCurrentProfile(user._id);
+        setName(profile.currProfile.name);
+        setPending(false);
+    }, [isPending, user])
 
     const changeHandler = (e) => {
         let selected = e.target.files[0];
@@ -35,21 +32,33 @@ const EditProfile = () => {
         }
     }
 
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault(); 
-        console.log({name, bio, pic});
-        history.push('/profile');
+        const newProfile = {name, bio, pic};
+        await editProfile(user._id, newProfile);
+        await getCurrentProfile(user._id);
+        history.push(`/profile/${user._id}`);
     }
 
     return(
         <div className="container">
             <Row>
                 <div className="col-md-7 mx-auto">
-                    <Card className="card card-signin my-5">
+                    {!user &&
+                        <Card className="card-signin">
+                            <CardBody>
+                                <h5 className="card-title text-center"><b>Login to view this page</b></h5>
+                                <div className="form-signin">
+                                    <Link to="/login"><Button color="success" className="text-uppercase btn-block">Login</Button></Link>
+                                </div>
+                            </CardBody>
+                        </Card>
+                    }
+                    {user && profile && <Card className="card card-signin my-5">
                         <CardBody className="card-body">
                             <h5 className="card-title text-center"><b>Update Your Profile</b></h5>
                             {msg ? (<Alert color="danger">{msg}</Alert>):null}
-                            <img src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80" alt="Profile image" style={{height:'150px', width: '150px'}} className="d-block mx-auto img-fluid img-thumbnail mb-4"></img>
+                            <img src={pic} alt="Profile image" style={{height:'150px', width: '150px'}} className="d-block mx-auto img-fluid img-thumbnail mb-4"></img>
                             <Form className="form-signin" onSubmit={onSubmit}>
                                 <Label className="upload-label upload-form">
                                     <Input type="file" id="pic" name="pic" onChange={changeHandler}/>
@@ -70,11 +79,16 @@ const EditProfile = () => {
                                 <Button color="primary" className="btn btn-lg btn-block text-uppercase" type="submit">Update</Button>
                             </Form>
                         </CardBody>
-                    </Card>
+                    </Card>}
                 </div>
             </Row>
         </div>
     )
 }
+
+const mapStateToProps = (state) => ({
+    profile: state.profile,
+    user: state.auth.user
+})
  
-export default EditProfile;
+export default connect(mapStateToProps, {getCurrentProfile, editProfile})(EditProfile);
