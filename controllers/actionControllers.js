@@ -37,12 +37,11 @@ module.exports.comment = async (req,res) => {
     const {cmnt} = req.body;
     var post = await Post.findOne({_id: postId});
     var profile = await Profile.findOne({userId: userId});
-    const profileId = profile._id;
     if(post.comments){
-        post.comments.push({cmntUser: profileId, cmntName: profile.name, cmntPic: profile.pic, cmnt: cmnt});
+        post.comments.push({cmntUser: userId, cmntName: profile.name, cmntPic: profile.pic, cmnt: cmnt});
     }
     else{
-        post.comments = [{cmntUser: profileId, cmntName: profile.name, cmntPic: profile.pic, cmnt: cmnt}];
+        post.comments = [{cmntUser: userId, cmntName: profile.name, cmntPic: profile.pic, cmnt: cmnt}];
     }
     post = await post.save();
     return res.json(post);

@@ -12,7 +12,7 @@ export const like = (userId, postId) => dispatch => {
 }
 
 export const comment = (userId, postId, cmnt) => dispatch => {
-    axios.post(`/api/like/${userId}/${postId}`, cmnt)
+    axios.post(`/api/comment/${userId}/${postId}`, {cmnt})
         .then(res => dispatch({
             type: COMMENT,
             payload: res.data
@@ -21,7 +21,7 @@ export const comment = (userId, postId, cmnt) => dispatch => {
 }
 
 export const deleteComment = (postId, commentId) => dispatch => {
-    axios.delete(`/api/like/${postId}/${commentId}`)
+    axios.delete(`/api/comment/${postId}/${commentId}`)
         .then(res => dispatch({
             type: DELETE_COMMENT,
             payload: res.data
