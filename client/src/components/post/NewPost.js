@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Row, Card, Button, Form, FormGroup, Label, Input, Alert, CardBody } from 'reactstrap';
 import { connect } from 'react-redux';
 import ProgressBar from '../comps/ProgressBar';
