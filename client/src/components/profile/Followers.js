@@ -1,4 +1,3 @@
-import {Button} from 'reactstrap';
 import { getProfile } from '../../actions/profileActions';
 import { connect } from 'react-redux';
 import { useEffect, useState } from 'react';
@@ -22,15 +21,18 @@ const Followers = ({profile, getProfile, user}) => {
                     <div className="p-3 bg-white rounded">
                         <div className="d-flex justify-content-between">
                             <div className="d-flex flex-row align-items-center">
-                                <Link to={`/profile/${follower.followerId}`}>
-                                    <div className="position-relative">
-                                        <img src={follower.followerPic} width="40" className="rounded-circle"/>
-                                    </div>
-                                </Link>
+                                <div className="position-relative">
+                                    <img src={follower.followerPic} width="40" className="rounded-circle"/>
+                                </div>
                                 <div className="ml-2">
+                                    {follower.followerId !== user._id ?
+                                    <a href={`/profile/${follower.followerId}`}>
+                                        <h5 className="mb-0">{follower.followerName}</h5>
+                                    </a>:
                                     <Link to={`/profile/${follower.followerId}`}>
                                         <h5 className="mb-0">{follower.followerName}</h5>
                                     </Link>
+                                    }
                                 </div>
                             </div>
                         </div>

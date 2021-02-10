@@ -64,6 +64,7 @@ class Profile extends Component {
         else{
             this.setState({followed: false});
         }
+        this.setState({followLoaded: false});
     }
 
     componentDidUpdate(prevProps){
@@ -71,7 +72,6 @@ class Profile extends Component {
         {
             this.ongetProfile(this.props.match.params.id);
             this.ongetUserPosts(this.props.match.params.id);
-            this.getFollowing(this.props.profile.currProfile, this.props.profile.profile);
         }
     }
 

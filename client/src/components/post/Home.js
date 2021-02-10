@@ -48,18 +48,20 @@ class Home extends Component {
                         }
                         {user && posts && posts.map((post)=>(<Card className="mb-4 card-signin">
                             <CardHeader>
-                                <Link to ={`/profile/${post.userId}`}><img src={post.pic} 
+                                <img src={post.pic} 
                                     class="rounded-circle"
                                     loading="lazy"
                                     alt="User"
                                     width="30px"
-                                /></Link>
-                                <Link to={`/profile/${post.userId}`}><span className="ml-2"><b>{post.name}</b></span><br/></Link>
+                                />
+                                {post.userId !== user._id ? 
+                                <a href={`/profile/${post.userId}`}><span className="ml-2"><b>{post.name}</b></span><br/></a>: 
+                                <Link to={`/profile/${post.userId}`}><span className="ml-2"><b>{post.name}</b></span><br/></Link>}
                             </CardHeader>
                             <CardBody>
-                                <Link to={`/post/${post._id}`}>
+                                <a href={`/post/${post._id}`}>
                                     <CardImg src={post.image} loading="lazy"></CardImg>
-                                </Link>
+                                </a>
                                 <CardText tag="h6" className="mt-3">{post.desc}</CardText>
                             </CardBody>
                         </Card>))}
