@@ -33,7 +33,6 @@ export default function(state=initialState, action){
         case FOLLOW:
             return{
                 ...state,
-                profile: action.payload,
                 loading: false
             }
 

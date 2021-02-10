@@ -53,7 +53,6 @@ export default function(state=initialState, action){
         case LIKE:
             return{
                 ...state,
-                singlePost: action.payload
             }
 
         case COMMENT:

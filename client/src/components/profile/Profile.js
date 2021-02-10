@@ -16,7 +16,8 @@ class Profile extends Component {
         currLoaded: false,
         postLoaded: false,
         following: [], 
-        followLoaded: false
+        followLoaded: false,
+        followed: false
     }
 
     static propTypes = {
@@ -45,17 +46,24 @@ class Profile extends Component {
         this.setState({postLoaded: true});
     }
 
-    getFollowing = (currProfile) => {
-        var i;
-        for(i=0;i<currProfile.following.length;i++){
+    getFollowing = (currProfile, profile) => {
+        for(var i=0;i<currProfile.following.length;i++){
             this.state.following.push(currProfile.following[i].followingId);
         }
-
+        if(this.state.following.includes(profile.userId)){
+            this.setState({followed: true});
+        }
         this.setState({followLoaded: true});
     }
 
     onfollow = async (followerId, followingId) => {
         await this.props.follow(followerId,followingId);
+        if(this.state.followed===false){
+            this.setState({followed: true});
+        }
+        else{
+            this.setState({followed: false});
+        }
     }
 
     componentDidUpdate(prevProps){
@@ -63,6 +71,7 @@ class Profile extends Component {
         {
             this.ongetProfile(this.props.match.params.id);
             this.ongetUserPosts(this.props.match.params.id);
+            this.getFollowing(this.props.profile.currProfile, this.props.profile.profile);
         }
     }
 
@@ -85,8 +94,8 @@ class Profile extends Component {
             this.ongetCurrProfile(user._id);
         }
 
-        if(currProfile && !this.state.followLoaded){
-            this.getFollowing(currProfile);
+        if(profile && currProfile && !this.state.followLoaded){
+            this.getFollowing(currProfile, profile);
         }
 
         return(
@@ -109,14 +118,14 @@ class Profile extends Component {
                                     <img src={profile.pic} alt="..." width="130" className="rounded mb-2 img-thumbnail"/>
                                     {user._id === profile.userId &&
                                     <Link to='/edit-profile'><a className="btn btn-outline-dark btn-sm btn-block">Edit profile</a></Link>}
-                                    {user._id !== profile.userId && !this.state.following.includes(profile.userId) &&
-                                    <a href={`/profile/${profile.userId}`}><Button color="outline-success" className="btn-sm btn-block" onClick={() => {this.onfollow(user._id, profile.userId)}}>Follow</Button></a>}
-                                    {user._id !== profile.userId && this.state.following.includes(profile.userId) &&
-                                    <a href={`/profile/${profile.userId}`}><Button color="outline-danger" className="btn-sm btn-block" onClick={() => {this.onfollow(user._id, profile.userId)}}>Unfollow</Button></a>}
+                                    {user._id !== profile.userId && !this.state.followed &&
+                                    <Button color="outline-success" className="btn-sm btn-block" onClick={() => {this.onfollow(user._id, profile.userId)}}>Follow</Button>}
+                                    {user._id !== profile.userId && this.state.followed &&
+                                    <Button color="outline-danger" className="btn-sm btn-block" onClick={() => {this.onfollow(user._id, profile.userId)}}>Unfollow</Button>}
                                 </div>
                                 <div className="media-body mb-5 text-white">
                                     <h4 className="mt-0">{profile.name}</h4>
-                                    <h6 className="mt-0 mb-4"><i>@{user.username}</i></h6>
+                                    {user._id === profile.userId && <h6 className="mt-0 mb-4"><i>@{user.username}</i></h6>}
                                 </div>
                             </div>
                         </div>

@@ -14,7 +14,8 @@ class PostDetail extends Component {
         cmnt: '',
         postLoaded: false,
         likeUsers: [],
-        likeLoaded: false
+        likeLoaded: false,
+        liked: false
     }
 
     static propTypes = {
@@ -48,12 +49,20 @@ class PostDetail extends Component {
         for(var i=0;i<post.likes.length;i++){
             this.state.likeUsers.push(post.likes[i].likeUser);
         }
+        if(this.state.likeUsers.includes(this.props.user._id)){
+            this.setState({liked: true});
+        }
         this.setState({likeLoaded: true});
     }
 
     onLike = async (userId, postId) => {
         await this.props.like(userId, postId);
-        await this.props.getSinglePost(this.props.match.params.id);
+        if(this.state.liked===false){
+            this.setState({liked: true});
+        }
+        else{
+            this.setState({liked: false});
+        }
     }
 
     render(){
@@ -64,7 +73,7 @@ class PostDetail extends Component {
             this.ongetSinglePost();
         }
 
-        if(post && post.singlePost && !this.state.likeLoaded){
+        if(user && post && post.singlePost && !this.state.likeLoaded){
             this.getLikeUsers(post.singlePost);
         }
 
@@ -83,7 +92,7 @@ class PostDetail extends Component {
                         </Card>
                     </div>
                     }
-                    {user && post && post.singlePost && <div className="col-md-8 mx-auto mb-3">
+                    {user && post && post.singlePost && post.singlePost.likes && <div className="col-md-8 mx-auto mb-3">
                         <Card className="card-signin">
                             <CardHeader>
                                 <Link to ={`/profile/${post.singlePost.userId}`}><img src={post.singlePost.pic} 
@@ -96,8 +105,8 @@ class PostDetail extends Component {
                             <CardBody>
                                 <CardImg src={post.singlePost.image} alt="" className="img-fluid rounded shadow-sm"></CardImg>
                                 <CardText tag="h5" className="mt-2">{post.singlePost.desc}</CardText>
-                                {!this.state.likeUsers.includes(user._id) && <a href={`/post/${post.singlePost._id}`}><button className="mr-2 btn btn-outline-info" onClick={() => {this.onLike(user._id, post.singlePost._id)}}>Like | {post.singlePost.likes.length}</button></a>}
-                                {this.state.likeUsers.includes(user._id) && <a href={`/post/${post.singlePost._id}`}><button className="mr-2 btn btn-info" onClick={() => {this.onLike(user._id, post.singlePost._id)}} >Like | {post.singlePost.likes.length}</button></a>}
+                                {!this.state.liked && <button className="mr-2 btn btn-outline-info" onClick={() => {this.onLike(user._id, post.singlePost._id)}}>Like | {post.singlePost.likes.length}</button>}
+                                {this.state.liked && <button className="mr-2 btn btn-info" onClick={() => {this.onLike(user._id, post.singlePost._id)}} >Like | {post.singlePost.likes.length}</button>}
                             </CardBody>
                         </Card>
 
