@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { getAllPosts } from '../../actions/postActions';
 import { connect } from 'react-redux';
 import { useEffect, useState } from 'react';
+import {Link} from 'react-router-dom';
 
 const Explore = ({post, getAllPosts}) => {
 
@@ -17,11 +18,11 @@ const Explore = ({post, getAllPosts}) => {
             <div className="row">
                 {post.allPosts && post.allPosts.map((post)=>(
                     <div className="col-md-3 mb-3">
-                        <motion.img src={post.image} loading="lazy" alt="" className="img-fluid rounded shadow-sm"
+                        <a href={`/post/${post._id}`}><motion.img src={post.image} loading="lazy" alt="" className="img-fluid rounded shadow-sm"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.5 }}
-                        />
+                        /></a>
                     </div>
                 ))}
             </div>

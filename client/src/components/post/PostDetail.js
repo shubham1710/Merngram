@@ -132,7 +132,7 @@ class PostDetail extends Component {
                                                     <h5>{comment.cmntName}</h5>
                                                     <p className="m-b-5 m-t-10">{comment.cmnt}</p>
                                                 </div>
-                                                <span className="close" style={{color: 'red'}} onClick={() => {this.onDelete(post.singlePost._id, comment._id)}}>x</span>
+                                                {user._id === comment.cmntUser && <span className="close" style={{color: 'red'}} onClick={() => {this.onDelete(post.singlePost._id, comment._id)}}>x</span>}
                                             </motion.div>))}                                        
                                         </motion.div>
                                     </Card>

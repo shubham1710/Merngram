@@ -46,6 +46,17 @@ class Home extends Component {
                                 </CardBody>
                             </Card>
                         }
+                        {user && posts.length==0 &&
+                            <Card className="card-signin my-5">
+                                <CardBody>
+                                    <h5 className="card-title text-center"><b>Please post something to view in feed!</b></h5>
+                                    <div className="form-signin">
+                                        <Link to="/new"><Button color="primary" className="text-uppercase btn-block mb-2">Add Photo</Button></Link>
+                                        <Link to="/explore"><Button color="info" className="text-uppercase btn-block">See All Photos</Button></Link>
+                                    </div>
+                                </CardBody>
+                            </Card>
+                        }
                         {user && posts && posts.map((post)=>(<Card className="mb-4 card-signin">
                             <CardHeader>
                                 <img src={post.pic} 
