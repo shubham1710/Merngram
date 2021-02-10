@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { Link } from 'react-router-dom';
 import {Card, Button, CardBody, CardImg, CardText, CardHeader} from 'reactstrap';
-import { getFollowingPosts } from '../../actions/postActions';
+import { getAllPosts } from '../../actions/postActions';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -12,23 +12,23 @@ class Home extends Component {
     }
 
     static propTypes = {
-        getFollowingPosts: PropTypes.func.isRequired,
         isAuthenticated: PropTypes.bool,
         user: PropTypes.object.isRequired,
         post: PropTypes.object.isRequired,
+        getAllPosts: PropTypes.func.isRequired
     }
 
-    ongetFollowingPosts = async (userId) => {
-        await this.props.getFollowingPosts(userId);
+    ongetPosts = async () => {
+        await this.props.getAllPosts();
         this.setState({postLoaded: true});
     }
 
     render(){
         const user = this.props.user;
-        const posts = this.props.post.followingPosts;
+        const posts = this.props.post.allPosts;
 
         if(this.props.isAuthenticated && !this.props.post.loading && !this.state.postLoaded){
-            this.ongetFollowingPosts(user._id);
+            this.ongetPosts();
         }
 
         return(
@@ -89,4 +89,4 @@ const mapStateToProps = (state) => ({
     post: state.post
 })
 
-export default connect(mapStateToProps,{getFollowingPosts})(Home);
+export default connect(mapStateToProps,{ getAllPosts})(Home);
