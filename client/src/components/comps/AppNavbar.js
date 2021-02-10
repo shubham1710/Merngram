@@ -3,7 +3,6 @@ import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, Container, 
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Logout } from '../auth/Logout';
 
 class AppNavbar extends Component {
     state = {
@@ -31,7 +30,7 @@ class AppNavbar extends Component {
                     <Link to="/new"><NavLink>New Post</NavLink></Link>
                 </NavItem>
                 <NavItem>
-                    {user && <Link to={`/profile/${user._id}`}><NavLink>Profile</NavLink></Link>}
+                    {user && user._id &&<Link to={`/profile/${user._id}`}><NavLink>Profile</NavLink></Link>}
                 </NavItem>
                 <NavItem>
                     <Link to="/logout"><NavLink>Logout</NavLink></Link>
