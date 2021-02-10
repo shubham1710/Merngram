@@ -115,7 +115,7 @@ class Profile extends Component {
                         <div className="px-4 pt-0 pb-4 cover">
                             <div className="media align-items-end profile-head">
                                 <div className="profile mr-3">
-                                    <img src={profile.pic} alt="..." width="130" className="rounded mb-2 img-thumbnail"/>
+                                    <img src={profile.pic} loading="lazy" alt="..." width="130" className="rounded mb-2 img-thumbnail"/>
                                     {user._id === profile.userId &&
                                     <Link to='/edit-profile'><a className="btn btn-outline-dark btn-sm btn-block">Edit profile</a></Link>}
                                     {user._id !== profile.userId && !this.state.followed &&
@@ -161,7 +161,7 @@ class Profile extends Component {
                             <div className="row">
                             {userPosts && userPosts.map((post)=>(
                                 <div className="col-md-3 mb-3">
-                                    <motion.img src={post.image} alt="" className="img-fluid rounded shadow-sm"
+                                    <motion.img loading="lazy" src={post.image} alt="" className="img-fluid rounded shadow-sm"
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
                                     transition={{ delay: 0.5 }}

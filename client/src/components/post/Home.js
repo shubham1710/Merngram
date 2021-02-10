@@ -50,6 +50,7 @@ class Home extends Component {
                             <CardHeader>
                                 <Link to ={`/profile/${post.userId}`}><img src={post.pic} 
                                     class="rounded-circle"
+                                    loading="lazy"
                                     alt="User"
                                     width="30px"
                                 /></Link>
@@ -57,7 +58,7 @@ class Home extends Component {
                             </CardHeader>
                             <CardBody>
                                 <Link to={`/post/${post._id}`}>
-                                    <CardImg src={post.image}></CardImg>
+                                    <CardImg src={post.image} loading="lazy"></CardImg>
                                 </Link>
                                 <CardText tag="h6" className="mt-3">{post.desc}</CardText>
                             </CardBody>

@@ -103,7 +103,7 @@ class PostDetail extends Component {
                                 <Link to ={`/profile/${post.singlePost.userId}`}><span className="ml-2"><b>{post.singlePost.name}</b></span><br/></Link>
                             </CardHeader>
                             <CardBody>
-                                <CardImg src={post.singlePost.image} alt="" className="img-fluid rounded shadow-sm"></CardImg>
+                                <CardImg src={post.singlePost.image} alt="" loading="lazy" className="img-fluid rounded shadow-sm"></CardImg>
                                 <CardText tag="h5" className="mt-2">{post.singlePost.desc}</CardText>
                                 {!this.state.liked && <button className="mr-2 btn btn-outline-info" onClick={() => {this.onLike(user._id, post.singlePost._id)}}>Like | {post.singlePost.likes.length}</button>}
                                 {this.state.liked && <button className="mr-2 btn btn-info" onClick={() => {this.onLike(user._id, post.singlePost._id)}} >Like | {post.singlePost.likes.length}</button>}
@@ -127,7 +127,7 @@ class PostDetail extends Component {
                                         </CardHeader>
                                         <motion.div className="comment-widgets m-b-20" layout>
                                             {post.singlePost.comments.map((comment) => (<motion.div className="d-flex flex-row comment-row" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}>
-                                                <div className="p-2"><span className="round"><img src={comment.cmntPic} alt="user" width="30"/></span></div>
+                                                <div className="p-2"><span className="round"><img src={comment.cmntPic} loading="lazy" alt="user" width="30"/></span></div>
                                                 <div className="comment-text active w-100">
                                                     <h5>{comment.cmntName}</h5>
                                                     <p className="m-b-5 m-t-10">{comment.cmnt}</p>

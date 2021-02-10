@@ -17,7 +17,7 @@ const Explore = ({post, getAllPosts}) => {
             <div className="row">
                 {post.allPosts && post.allPosts.map((post)=>(
                     <div className="col-md-3 mb-3">
-                        <motion.img src={post.image} alt="" className="img-fluid rounded shadow-sm"
+                        <motion.img src={post.image} loading="lazy" alt="" className="img-fluid rounded shadow-sm"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.5 }}
