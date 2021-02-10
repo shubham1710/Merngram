@@ -45,7 +45,7 @@ class Profile extends Component {
         this.setState({postLoaded: true});
     }
 
-    getFollowing = (currProfile, profile) => {
+    getFollowing = (currProfile) => {
         var i;
         for(i=0;i<currProfile.following.length;i++){
             this.state.following.push(currProfile.following[i].followingId);
@@ -58,7 +58,7 @@ class Profile extends Component {
         await this.props.follow(followerId,followingId);
     }
 
-    componentDidUpdate(prevProps, prevState){
+    componentDidUpdate(prevProps){
         if(prevProps.match.params.id !== this.props.match.params.id)
         {
             this.ongetProfile(this.props.match.params.id);
@@ -86,7 +86,7 @@ class Profile extends Component {
         }
 
         if(currProfile && !this.state.followLoaded){
-            this.getFollowing(currProfile, profile);
+            this.getFollowing(currProfile);
         }
 
         return(
