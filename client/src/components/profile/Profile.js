@@ -159,7 +159,7 @@ class Profile extends Component {
                                 </Link>
                             </div>
                             <div className="row">
-                            {userPosts && userPosts.map((post)=>(
+                            {userPosts && userPosts.slice(0,4).map((post)=>(
                                 <div className="col-md-3 mb-3">
                                     <motion.img loading="lazy" src={post.image} alt="" className="img-fluid rounded shadow-sm"
                                     initial={{ opacity: 0 }}
