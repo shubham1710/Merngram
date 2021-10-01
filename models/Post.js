@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+// This schema is for post model. It stores all the posts for a user.
 const PostSchema = new Schema({
     userId: {
         type: Schema.Types.ObjectId,
